@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+  height="512" width="512" viewBox="0 0 512 512">
+
+  <image href="https://s0.gifyu.com/images/hello_kitty_Hello_Kitty_Head_ClipArt_in_PNG_File.png" height="512" width="512" />
+
+  <rect width="512" height="512" stroke="red" fill="rgba(255,255,255,0.95)" opacity="0.95" ></rect>
+
+  <text x="2" y="12" font-size="12" text-anchor="start" fill="red">0</text>
+  <path d="M256  64 H0 H512" stroke="lightgray" fill="white"></path>
+  <text x="2" y="68" font-size="12" text-anchor="start" fill="red">64</text>
+  <path d="M256 128 H0 H512" stroke="lightgray" fill="white"></path>
+  <text x="2" y="132" font-size="12" text-anchor="start" fill="red">128</text>
+  <path d="M256 192 H0 H512" stroke="lightgray" fill="white"></path>
+  <text x="2" y="196" font-size="12" text-anchor="start" fill="red">192</text>
+  <path d="M256 256 H0 H512" stroke="lightgray" fill="white"></path>
+  <text x="2" y="260" font-size="12" text-anchor="start" fill="red">256</text>
+  <path d="M256 320 H0 H512" stroke="lightgray" fill="white"></path>
+  <text x="2" y="324" font-size="12" text-anchor="start" fill="red">320</text>
+  <path d="M256 384 H0 H512" stroke="lightgray" fill="white"></path>
+  <text x="2" y="388" font-size="12" text-anchor="start" fill="red">384</text>
+  <path d="M256 448 H0 H512" stroke="lightgray" fill="white"></path>
+  <text x="2" y="452" font-size="12" text-anchor="start" fill="red">448</text>
+  <text x="2" y="510" font-size="12" text-anchor="start" fill="red">512</text>
+
+  <path d="M64  0 V512" stroke="lightgray" fill="white"></path>
+  <text x="58" y="12" font-size="12" text-anchor="start" fill="red">64</text>
+  <path d="M128  0 V512" stroke="lightgray" fill="white"></path>
+  <text x="118" y="12" font-size="12" text-anchor="start" fill="red">128</text>
+  <path d="M195  0 V512" stroke="lightgray" fill="white"></path>
+  <text x="186" y="12" font-size="12" text-anchor="start" fill="red">192</text>
+  <path d="M256  0 V512" stroke="lightgray" fill="white"></path>
+  <text x="246" y="12" font-size="12" text-anchor="start" fill="red">256</text>
+  <path d="M320  0 V512" stroke="lightgray" fill="white"></path>
+  <text x="310" y="12" font-size="12" text-anchor="start" fill="red">320</text>
+  <path d="M384  0 V512" stroke="lightgray" fill="white"></path>
+  <text x="374" y="12" font-size="12" text-anchor="start" fill="red">384</text>
+  <path d="M448  0 V512" stroke="lightgray" fill="white"></path>
+  <text x="438" y="12" font-size="12" text-anchor="start" fill="red">448</text>
+  <text x="492" y="12" font-size="12" text-anchor="start" fill="red">512</text>
+
+  <path d="M256 256 V270 V242 M256 256 H270 H242" stroke="black" fill="white"></path>
+
+  <text x="254" y="250" font-size="16" text-anchor="middle" fill="red">(256, 256)</text>
+
+  <ellipse fill="#77DD47" stroke="#246614" stroke-width="5" cx="256" cy="270" rx="200" ry="150" opacity="0.2"/>
+
+
+  <path d="M436 212 A200 150, 0, 1, 1, 88 192 M85 195 A700 140, 53, 0, 1, 180 128 M175 128, A130 100, 0, 0, 1, 270 120 M266 120 A60 120, 0, 0, 1, 352 130 M346 128 A740 125, 120, 0, 1, 435 150 M435 145 A50 50, 0, 0, 1, 440 220" stroke-width="10" stroke="#d92564" fill="none" opacity="0.6"/>
+
+  <circle id="c1" cx="436" cy="212" r="1" stroke="red" fill="none">
+    <animate attributeName="r" to="15" dur="2s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle id="c2" cx="88" cy="192" r="1" stroke="red" fill="none">
+    <animate attributeName="r" to="15" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <circle id="c3" cx="180" cy="128" r="1" stroke="orange" fill="gray" opacity="0.8">
+    <animate attributeName="r" to="15" dur="2s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle id="c5" cx="266" cy="120" r="1" stroke="green" fill="gray" opacity="0.8">
+    <animate attributeName="r" to="15" dur="2s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle id="c6" cx="352" cy="130" r="1" stroke="#294f8f" fill="none">
+    <animate attributeName="r" to="15" dur="2s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle id="c7" cx="346" cy="128" r="1" stroke="#381463" fill="gray" opacity="0.5">
+    <animate attributeName="r" to="15" dur="2s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle id="c8" cx="435" cy="150" r="1" stroke="#5c0466" fill="gray" opacity="0.5">
+    <animate attributeName="r" to="15" dur="2s" repeatCount="indefinite"/>
+  </circle>
+
+  
+
+  <circle cx="0" cy="0" r="10" stroke="blue" fill="yellow" opacity="0.6">
+    <animateMotion dur="5s" path="M436 212 A200 150, 0, 1, 1, 88 192 M85 195 A100 62, 53, 0, 1, 180 128 M175 128, A130 100, 0, 0, 1, 270 120 M266 120 A60 120, 0, 0, 1, 352 130 M346 128 A140 55, 120, 0, 1, 435 150 M435 145 A50 50, 0, 0, 1, 440 220" repeatCount="indefinite" rotate="auto"/>
+    <animate attributeName="r" to="25" dur="5s" repeatCount="indefinite"/>
+  </circle>
+</svg>
+    
