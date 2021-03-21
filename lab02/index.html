@@ -8,9 +8,9 @@
       		@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap');
 
 		    div, ul {
-		      border: solid black 1px;
-		      margin: 5px;
-		      padding: 10px;
+		      border: solid black 1.5px;
+		    /*  margin: 5px;
+		      padding: 10px;*/
 		      background-color: rgba(255, 255, 128, 0.1);
 		    }
 
@@ -28,13 +28,14 @@
 			}
 
 			svg {
-		        font-family: 'Noto Serif JP', serif;
+		        font-family: 'Segoe Script', serif; /*Segoe Script, Gabriola*/
+		        font-weight: bold;
 			}
 
 			#dropfile {
 				height: 5%;
-				width: 100%;
-				border-style: dotted;;
+				width: 98.7%;
+				border-style: dotted;
 				display: block;
 				text-align: center;
 			    animation-name: oxxo;
@@ -42,7 +43,7 @@
 			    animation-iteration-count: infinite;
 			    padding: 10px;
 		        background-color: rgba(255, 255, 0, 0.1);
-		        font-family: 'Noto Serif JP', serif;
+		        font-family: 'Segoe Script', serif;
 		        margin-bottom: 10px;
 			}
 			#dropfile:hover {
@@ -50,7 +51,7 @@
 			}
 			@keyframes oxxo{
 			    from {
-			        border-style: dotted;;
+			        border-style: dotted;
 			        border-color: blue;
 			        color: blue;
 			    }
@@ -72,10 +73,10 @@
 			Lab 02 treemap
 		</div>
 		<ul>
-			<li>遠距教學授課防疫演練: 2021.03.18 (四) </li>
-			<li>上台報告: 2021.04.01 (四) </li>
-			<li><a href="https://www.d3-graph-gallery.com/graph/treemap_custom.html">Treemap customization in d3.js</a></li>
-			<li><a href="http://blog.infographics.tw/2015/10/d3js-tutorial-treemap-and-budget/">D3.js 實戰 － 利用 Treemap Layout 將政府預算視覺化</a></li>
+			<li>Data Source: <a href="https://portal.gdc.cancer.gov/legacy-archive">TCGA legacy (The Cancer Genome Atlas Legacy)</a> </li>
+			<li>Columns: 1. Probe ID 2. Chromosome 3. Genomic Coordinate 4. Beta Value</li>
+			<!-- <li><a href="https://www.d3-graph-gallery.com/graph/treemap_custom.html">Treemap customization in d3.js</a></li>
+			<li><a href="http://blog.infographics.tw/2015/10/d3js-tutorial-treemap-and-budget/">D3.js 實戰 － 利用 Treemap Layout 將政府預算視覺化</a></li> -->
 		</ul>
 
 		<div id="dropfile" for="csvfile">
@@ -87,7 +88,7 @@
 		
 		<script>
 			//產生SVG
-			function mkSVG(container, bosses, data){
+			function mkSVG(container, allChr, data){
 				const treemap = document.createElement('div')
 				
 				const margin = {top: 10, right: 10, bottom: 10, left: 10};
@@ -103,24 +104,24 @@
 				//利用d3.hierarchy產生x y的資料
 				const d3ds = d3.hierarchy(data).sum(({value}) => value)
 				
-				
+				console.log(d3ds.leaves())
 				//設定svg位置
 				d3.treemap()
 				  .size([width, height])
-				  .paddingTop(45)
-				  .paddingRight(15)
+				  .paddingTop(25)
+				  .paddingRight(5)
 				  .paddingInner(10) 
 				  (d3ds)
 				  
 				  
 				//設定指導教授顏色
 				const color = d3.scaleOrdinal()
-								.domain(bosses)
+								.domain(allChr)
 								.range([ "#402D54", "#D18975", "#8FD175", "#ff66ff", "#ffb366", "#80ff80", "#d279a6", "#ff6633", "#6600ff", "#00bfff", "#53c653", "#ff8000"])
 								
 				//設定透明度，分數越低越透明
 				const opacity = d3.scaleLinear()
-								.domain([100, 50])
+								.domain([1, 0])
 								.range([1,.1])
 								
 				//化長方形
@@ -135,7 +136,7 @@
 					 .attr('height', ({y0,y1}) => y1-y0)
 					 .style('stroke', 'red')
 					 .style('fill', ({parent}) => color(parent.data.name))
-					 .style('opacity', (d) => opacity(d.data.value))
+					 .style('opacity', (d) => opacity(d.data.value*0.01))
 					 
 				
 				//寫學生姓名
@@ -158,7 +159,7 @@
 					.append('text')
 					 .attr('x', ({x0}) => x0 + 1)
 					 .attr('y', ({y0}) => y0 + 35)
-					 .text(({data}) => data.value < 60 ? '' : data.value)
+					 .text(({data}) => data.value)
 					 .attr('font-size', '.9rem')
 					 .attr('fill', 'white')
 					 
@@ -169,7 +170,7 @@
 					.append('text')
 					 .attr('x', ({x0}) => x0 + 1)
 					 .attr('y', ({y0}) => y0 + 50)
-					 .text(({data}) => parseFloat(data.seconds) > 30 ? '不及格' : '(' + data.seconds + '秒)')
+					 .text(({data}) => data.betaVal)
 					 .attr('font-size', '.9rem')
 					 .attr('fill', 'white')
 					 
@@ -212,31 +213,31 @@
 						const fr = new FileReader()
 						
 						fr.onload = () => {
-							const allBoss = []
+							const allChr = []
 							const studentArr = fr.result.split('\n').map(e => e.split(','))
-							
+							// console.log(studentArr)
 							const d3Json = {
 								children: [],
 								name: 'vis2021s'
 							}
-							
+
 							//先由小到大排列，算出名次、級距、再算出分數
-							const mapping = new Array(41).fill(-1)
+							const mapping = new Array(studentArr.length).fill(-1)
 							const scoreSort = studentArr.sort((x,y) => {
-								let a = isNaN(parseFloat(x[3])) ? 40 : parseFloat(x[3])
-								let b = isNaN(parseFloat(y[3])) ? 40 : parseFloat(y[3])
+								let a = isNaN(parseFloat(x[3])) ? 0 : x[3]
+								let b = isNaN(parseFloat(y[3])) ? 0 : y[3]
 								
-								return a-b
-							}).map(e => isNaN(parseFloat(e[3])) ? 40 : parseFloat(e[3]))
+								return b-a // b-a => DESC; a-b => ASC
+							}).map(e => isNaN(parseFloat(e[3])) ? 0 : e[3])
 							
 							const scoreSet = [...new Set([...scoreSort.filter(e => e<=30)])]
-							const step = (100 - 60) / scoreSet.length
+							const step = (100-60) / scoreSet.length
 							
 							for(let i of scoreSort){
 								const idx = scoreSet.indexOf(i)
 								let score
 								if(idx == -1){
-									score = 50
+									score = 0
 								}
 								else{
 									score = (100 - step * idx).toFixed(2)
@@ -246,31 +247,28 @@
 							
 							
 							
-							
 							for(let i of studentArr){
-								const bossName = i[2].length ? i[2] : (i[1] == '碩' ? '未知' : '資工四')
+								const chr = i[1].length ? i[1] : 0
 								
-								
-								if(allBoss.indexOf(bossName) == -1){
-									allBoss.push(bossName)
+								if(allChr.indexOf(chr) == -1){  // no match (there is no chr in allChr)
+									allChr.push(chr)
 									d3Json.children.push({
-										name: bossName,
+										name: chr,
 										children: []
 									})
 								}
 								
-								const seconds = isNaN(parseInt(i[3])) ? 40 : parseInt(i[3])
+								const betaVal = isNaN(i[3]) ? 0 : i[3]
 								
-								d3Json.children.find(e => e.name == bossName).children.push({
+								d3Json.children.find(e => e.name == chr).children.push({
 									name: i[0],
-									seconds,
-									value: parseFloat(mapping[seconds])
+									betaVal,
+									value: mapping[betaVal]
 								})
 								
-
-								
 							}
-							treemapContainer.appendChild(mkSVG(treemapContainer, allBoss, d3Json))
+
+							treemapContainer.appendChild(mkSVG(treemapContainer, allChr, d3Json))
 							
 						}
 						
@@ -278,8 +276,6 @@
 					}
 					
 				})
-
-				
 			
 			})
 		</script>
