@@ -28,7 +28,7 @@
 			}
 
 			svg {
-		        font-family: 'Segoe Script', serif; /*Segoe Script, Gabriola*/
+		        font-family: 'Gabriola', serif; /*Segoe Script, */
 		        font-weight: bold;
 			}
 
@@ -148,7 +148,7 @@
 					 .attr('x', ({x0}) => x0 + 1)
 					 .attr('y', ({y0}) => y0 + 20)
 					 .text(({data}) => data.name)
-					 .attr('font-size', '1rem')
+					 .attr('font-size', '1.2rem')
 					 .attr('fill', 'white')
 				
 				//寫學生分數
@@ -160,7 +160,7 @@
 					 .attr('x', ({x0}) => x0 + 1)
 					 .attr('y', ({y0}) => y0 + 35)
 					 .text(({data}) => data.value)
-					 .attr('font-size', '.9rem')
+					 .attr('font-size', '1rem')
 					 .attr('fill', 'white')
 					 
 				svg
@@ -171,7 +171,7 @@
 					 .attr('x', ({x0}) => x0 + 1)
 					 .attr('y', ({y0}) => y0 + 50)
 					 .text(({data}) => data.betaVal)
-					 .attr('font-size', '.9rem')
+					 .attr('font-size', '1rem')
 					 .attr('fill', 'white')
 					 
 				svg
