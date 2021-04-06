@@ -19,6 +19,9 @@
 		    }
 
 			html, body {
+				font-family: 'Gabriola', serif;
+				font-weight: bold;
+				letter-spacing: 1px;
 				height: 100%;
 				width: 100%;
 				padding: 0;
@@ -30,24 +33,6 @@
 			svg {
 		        font-family: 'Gabriola', serif; /*Segoe Script, */
 		        font-weight: bold;
-			}
-
-			#dropfile {
-				height: 5%;
-				width: 98.7%;
-				border-style: dotted;
-				display: block;
-				text-align: center;
-			    animation-name: oxxo;
-			    animation-duration: 2s;
-			    animation-iteration-count: infinite;
-			    padding: 10px;
-		        background-color: rgba(255, 255, 0, 0.1);
-		        font-family: 'Segoe Script', serif;
-		        margin-bottom: 10px;
-			}
-			#dropfile:hover {
-			    background-color: rgba(128, 255, 255, 0.1);
 			}
 			@keyframes oxxo{
 			    from {
@@ -63,48 +48,43 @@
 			}
 			
 			#treemap {
-				height: 95%;
-				width: 100%;
+				height: 1200px;
+				width: 3300px;
 			}
 		</style>
 	</head>
 	<body>
-		<div>
+		<div style="padding-left: 25px; font-size: 50px">
 			Lab 02 treemap
 		</div>
-		<ul>
+		<ul style="font-size: 25px">
+			<li style="color: red">Esophagus Cancer DNA Methylation Data</li>
 			<li>Data Source: <a href="https://portal.gdc.cancer.gov/legacy-archive">TCGA legacy (The Cancer Genome Atlas Legacy)</a> </li>
 			<li>Columns: 1. Probe ID 2. Chromosome 3. Genomic Coordinate 4. Beta Value</li>
 			<!-- <li><a href="https://www.d3-graph-gallery.com/graph/treemap_custom.html">Treemap customization in d3.js</a></li>
 			<li><a href="http://blog.infographics.tw/2015/10/d3js-tutorial-treemap-and-budget/">D3.js 實戰 － 利用 Treemap Layout 將政府預算視覺化</a></li> -->
 		</ul>
-
-		<div id="dropfile" for="csvfile">
-			CSV 資料扔過來! Drop your CSV here.
-		</div>
 		
 		<div id="treemap"></div>
 		
 		
 		<script>
 			//產生SVG
-			function mkSVG(container, allChr, data){
-				const treemap = document.createElement('div')
-				
+			function mkSVG(allChr, data){
 				const margin = {top: 10, right: 10, bottom: 10, left: 10};
-				const height = container.clientHeight - margin.top - margin.bottom;
-				const width = container.clientWidth - margin.left - margin.right;
+				const height = 1200 - margin.top - margin.bottom;
+				const width = 3300 - margin.left - margin.right;
 				
-				const svg = d3.select(treemap)
+				const svg = d3.select("#treemap")
 							  .append('svg')
 							  .attr('width', width + margin.left + margin.right)
 							  .attr('height', height + margin.top + margin.bottom)
 							  .append('g')
+							  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 							
 				//利用d3.hierarchy產生x y的資料
 				const d3ds = d3.hierarchy(data).sum(({value}) => value)
-				
-				console.log(d3ds.leaves())
+
 				//設定svg位置
 				d3.treemap()
 				  .size([width, height])
@@ -123,7 +103,22 @@
 				const opacity = d3.scaleLinear()
 								.domain([1, 0])
 								.range([1,.1])
-								
+				function myTransform(selector){
+					selector.transition()
+					      .duration(750)
+					      .attr("transform", "scale(1.2)");
+				}
+
+				function changeFontColor(selector){
+					selector.on("mouseover", function(d){
+						d3.select(event.currentTarget)
+						.style('fill', 'black')
+					})
+					selector.on("mouseout", function(d){
+						d3.select(event.currentTarget)
+						.style('fill', 'white')
+					});
+				}
 				//化長方形
 				svg
 					.selectAll('rectangle')
@@ -137,147 +132,126 @@
 					 .style('stroke', 'red')
 					 .style('fill', ({parent}) => color(parent.data.name))
 					 .style('opacity', (d) => opacity(d.data.value*0.01))
-					 
+					 .on("mouseover", function(d){
+						d3.select(event.currentTarget)
+						.style('opacity', (d) => opacity(1.5 - d.data.value*0.01))
+						// .call(myTransform)
+					  })
+					 .on("mouseout", function(d){
+						d3.select(event.currentTarget)
+						.style('opacity', (d) => opacity(d.data.value*0.01));
+					 });
 				
 				//寫學生姓名
 				svg
-					.selectAll('studentNames')
+					.selectAll('#probeID')
 					.data(d3ds.leaves())
 					.enter()
 					.append('text')
 					 .attr('x', ({x0}) => x0 + 1)
-					 .attr('y', ({y0}) => y0 + 20)
+					 .attr('y', ({y0}) => y0 + 30)
 					 .text(({data}) => data.name)
-					 .attr('font-size', '1.2rem')
+					 .attr('font-size', '1.5rem')
 					 .attr('fill', 'white')
 				
 				//寫學生分數
 				svg
-					.selectAll('studentScore')
+					.selectAll('#methylationDeg')
 					.data(d3ds.leaves())
 					.enter()
 					.append('text')
 					 .attr('x', ({x0}) => x0 + 1)
-					 .attr('y', ({y0}) => y0 + 35)
+					 .attr('y', ({y0}) => y0 + 70)
 					 .text(({data}) => data.value)
-					 .attr('font-size', '1rem')
+					 .attr('font-size', '1.5rem')
 					 .attr('fill', 'white')
 					 
 				svg
-					.selectAll('studentSecond')
+					.selectAll('#betaVal')
 					.data(d3ds.leaves())
 					.enter()
 					.append('text')
 					 .attr('x', ({x0}) => x0 + 1)
-					 .attr('y', ({y0}) => y0 + 50)
+					 .attr('y', ({y0}) => y0 + 110)
 					 .text(({data}) => data.betaVal)
-					 .attr('font-size', '1rem')
+					 .attr('font-size', '1.5rem')
 					 .attr('fill', 'white')
+
 					 
 				svg
-					.selectAll('labertory')
+					.selectAll('#chromosome')
 					.data(d3ds.descendants().filter(function(d){return d.depth==1}))
 					.enter()
 					.append('text')
 					 .attr('x', ({x0}) => x0 + 1)
 					 .attr('y', ({y0}) => y0 + 21)
-					 .text(({data}) => data.name)
-					 .attr('font-size', '1.1rem')
+					 .text(({data}) => "Chr-"+data.name)
+					 .attr('font-size', '1.6rem')
 					 .attr('fill', 'black')
-					 
+				
 				return treemap
 			}	
 		</script>
 		
 		<script>
-			window.addEventListener('load', () => {
-				const treemapContainer = document.getElementById('treemap')
-				
-				document.getElementById('dropfile').addEventListener('dragover', (evt) => {
-					evt.preventDefault()
-				})
-				
-				document.getElementById('dropfile').addEventListener('drop', (evt) => {
-					evt.preventDefault()
-					
-					const { files } = evt.dataTransfer
-					
-					if(files.length){
-						if(treemapContainer.innerHTML.length){
-							treemapContainer.innerHTML = ''
-						}
-					
-						const csvFile = files[0]
-						
-						//讀取csv
-						const fr = new FileReader()
-						
-						fr.onload = () => {
-							const allChr = []
-							const studentArr = fr.result.split('\n').map(e => e.split(','))
-							// console.log(studentArr)
-							const d3Json = {
-								children: [],
-								name: 'vis2021s'
-							}
+			d3.csv("TCGA_Esophagus_T_Lv3_sample_with_cols.csv", function(data) {
+				// const treemapContainer = document.getElementById('treemap')
 
-							//先由小到大排列，算出名次、級距、再算出分數
-							const mapping = new Array(studentArr.length).fill(-1)
-							const scoreSort = studentArr.sort((x,y) => {
-								let a = isNaN(parseFloat(x[3])) ? 0 : x[3]
-								let b = isNaN(parseFloat(y[3])) ? 0 : y[3]
-								
-								return b-a // b-a => DESC; a-b => ASC
-							}).map(e => isNaN(parseFloat(e[3])) ? 0 : e[3])
-							
-							const scoreSet = [...new Set([...scoreSort.filter(e => e<=30)])]
-							const step = (100-60) / scoreSet.length
-							
-							for(let i of scoreSort){
-								const idx = scoreSet.indexOf(i)
-								let score
-								if(idx == -1){
-									score = 0
-								}
-								else{
-									score = (100 - step * idx).toFixed(2)
-								}
-								mapping[i] = score
-							}
-							
-							
-							
-							for(let i of studentArr){
-								const chr = i[1].length ? i[1] : 0
-								
-								if(allChr.indexOf(chr) == -1){  // no match (there is no chr in allChr)
-									allChr.push(chr)
-									d3Json.children.push({
-										name: chr,
-										children: []
-									})
-								}
-								
-								const betaVal = isNaN(i[3]) ? 0 : i[3]
-								
-								d3Json.children.find(e => e.name == chr).children.push({
-									name: i[0],
-									betaVal,
-									value: mapping[betaVal]
-								})
-								
-							}
+				const allChr = []
+				const d3Json = {
+					children: [],
+					name: 'vis2021s'
+				}
 
-							treemapContainer.appendChild(mkSVG(treemapContainer, allChr, d3Json))
-							
-						}
-						
-						fr.readAsText(csvFile)
+				//先由小到大排列，算出名次、級距、再算出分數
+				const mapping = new Array(data.length).fill(-1)
+				const scoreSort = data.sort((x,y) => {
+					let a = isNaN(parseFloat(x.Beta_Val)) ? 0 : x.Beta_Val
+					let b = isNaN(parseFloat(y.Beta_Val)) ? 0 : y.Beta_Val
+					
+					return b-a // b-a => DESC; a-b => ASC
+				}).map(e => isNaN(parseFloat(e.Beta_Val)) ? 0 : e.Beta_Val)
+				
+				const scoreSet = [...new Set([...scoreSort.filter(e => e<=30)])]
+				const step = (100-60) / scoreSet.length
+				
+				for(let i of scoreSort){
+					const idx = scoreSet.indexOf(i)
+					let score
+					if(idx == -1){
+						score = 0
+					}
+					else{
+						score = (100 - step * idx).toFixed(2)
+					}
+					mapping[i] = score
+				}
+				
+				
+				for(let subject of data){
+					const chr = subject.Chromosome
+					
+					if(allChr.indexOf(chr) == -1){  // no match (there is no chr in allChr)
+						allChr.push(chr)
+						d3Json.children.push({
+							name: chr,
+							children: []
+						})
 					}
 					
-				})
-			
+					const betaVal = isNaN(subject.Beta_Val) ? 0 : subject.Beta_Val
+					
+					d3Json.children.find(e => e.name == chr).children.push({
+						name: subject.Probe_ID,
+						betaVal,
+						value: mapping[betaVal]
+					})
+					
+				}
+
+				mkSVG(allChr, d3Json)
 			})
+					
 		</script>
 	
 	</body>
