@@ -173,7 +173,7 @@
 					.append('text')
 					 .attr('x', ({x0}) => x0 + 1)
 					 .attr('y', ({y0}) => y0 + 110)
-					 .text(({data}) => data.betaVal)
+					 .text(({data}) => parseFloat(data.betaVal).toFixed(6))
 					 .attr('font-size', '1.5rem')
 					 .attr('fill', 'white')
 
@@ -240,7 +240,6 @@
 					}
 					
 					const betaVal = isNaN(subject.Beta_Val) ? 0 : subject.Beta_Val
-					
 					d3Json.children.find(e => e.name == chr).children.push({
 						name: subject.Probe_ID,
 						betaVal,
