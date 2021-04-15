@@ -103,22 +103,32 @@
 				const opacity = d3.scaleLinear()
 								.domain([1, 0])
 								.range([1,.1])
-				function myTransform(selector){
-					selector.transition()
-					      .duration(750)
-					      .attr("transform", "scale(1.2)");
-				}
+				
 
-				function changeFontColor(selector){
-					selector.on("mouseover", function(d){
-						d3.select(event.currentTarget)
-						.style('fill', 'black')
-					})
-					selector.on("mouseout", function(d){
-						d3.select(event.currentTarget)
-						.style('fill', 'white')
-					});
-				}
+				// drop shadow
+				var defs = svg.append('defs');
+
+			    var filter = defs.append('filter')
+			      .attr('id', 'drop-shadow')
+			      .attr('height', '130%');
+
+			    filter.append('feGaussianBlur')
+			      .attr('in', 'SourceAlpha')
+			      .attr('stdDeviation', 7)
+			      .attr('result', 'blur');
+
+			    filter.append('feOffset')
+			      .attr('in', 'blur')
+			      .attr('dx', 5)
+			      .attr('dy', 5)
+			      .attr('result', 'offsetBlur');
+
+			    var feMerge = filter.append('feMerge');
+
+			    feMerge.append('feMergeNode')
+			      .attr('in', 'offsetBlur')
+			    feMerge.append('feMergeNode')
+			      .attr('in', 'SourceGraphic');
 				//化長方形
 				svg
 					.selectAll('rectangle')
@@ -129,16 +139,18 @@
 					 .attr('y', ({y0}) => y0)
 					 .attr('width', ({x0,x1}) => x1-x0)
 					 .attr('height', ({y0,y1}) => y1-y0)
+					 
 					 .style('stroke', 'red')
 					 .style('fill', ({parent}) => color(parent.data.name))
 					 .style('opacity', (d) => opacity(d.data.value*0.01))
 					 .on("mouseover", function(d){
 						d3.select(event.currentTarget)
+						.attr('filter', 'url(#drop-shadow)')
 						.style('opacity', (d) => opacity(1.5 - d.data.value*0.01))
-						// .call(myTransform)
 					  })
 					 .on("mouseout", function(d){
 						d3.select(event.currentTarget)
+						.attr('filter', 'none')
 						.style('opacity', (d) => opacity(d.data.value*0.01));
 					 });
 				
