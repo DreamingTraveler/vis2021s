@@ -13,6 +13,17 @@
   <title>d3.js learning</title>
   <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <style type="text/css">
+  @keyframes blink {
+      0% {
+             background-color: rgba(255,0,0,1)
+      }
+      50% {
+             background-color: rgba(255,0,0,0.5)
+      }
+      100% {
+             background-color: rgba(255,0,0,1)
+      }
+  }
   svg {
     font: 10px sans-serif;
     shape-rendering: crispEdges;
@@ -39,6 +50,7 @@
   #dropdown-list{
     width: 20%;
   }
+
   </style>
 
 </head>
@@ -65,7 +77,9 @@ d3.csv("data.csv", function(data){
   var divNum = Math.ceil(dataLen / winSize)
   var optionList = [...Array(divNum).keys()]
 
-  var colors = ["#b33040", "#d25c4d", "#f2b447", "#d9d574", "#7de3e1"];
+  // var colors = ["#b33040", "#d25c4d", "#f2b447", "#d9d574", "#7de3e1"];
+  var colors = ["rgba(13, 74, 41, 0.8)", "rgba(92, 125, 90, 0.8)", "rgba(119, 217, 179, 0.8)", 
+  "rgba(138, 209, 145, 0.8)", "rgba(230, 250, 180, 0.8)"]
 
   var container = d3.select("body").append("div").attr("id", "container");
   // var container = d3.select("body")
@@ -145,40 +159,57 @@ d3.csv("data.csv", function(data){
       .enter()
       .append("rect")
       .attr("class", "bar")
-      .attr("x", function(d) { return x(d.x) ; })
+      // .attr("x", function(d) { return x(d.x) ; })
+      // .attr("y", function(d) { return y(d.y0 + d.y); })
+      // .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); })
+      // .attr("width", x.rangeBand())
+      
+    // update
+    svg.selectAll(".bar")
+      .transition()
+      .ease("sin-out")
+      .duration(300)
+      .delay(function(d,i){ return(i*3)})
+      .attr("x", function(d) { return x(d.x) })
       .attr("y", function(d) { return y(d.y0 + d.y); })
       .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); })
-      .attr("width", x.rangeBand())
+      .attr("width", x.rangeBand() - 3)
+
+    svg.selectAll(".bar")
       .style("stroke", "black")
-      .style("stroke-width", "1")
+      .style("stroke-width", "0.8")
       .on("mouseover", function() { 
         tooltip.style("display", null); 
       })
       .on("mouseout", function() { 
         tooltip.style("display", "none"); 
-        d3.select(this).style("opacity", 1)
+        d3.select(this)
+          .style("opacity", 1)
+          .style("-webkit-filter", "invert(0%)")
+          .style("filter", "invert(0%)")
+          .style("stroke", "black")
       })
       .on("mousemove", function(d) {
         var xPosition = d3.mouse(this)[0] - 15;
         var yPosition = d3.mouse(this)[1] - 25;
 
-        d3.select(this).style("opacity", 0.5)
+        d3.select(this)
+          .transition()
+          .duration(300)
+
+
+        d3.select(this)
+          .style("opacity", 0.5)
+          .style("-webkit-filter", "invert(50%)")
+          .style("filter", "invert(50%)")
+          .style("stroke", "green")
+
+        
         tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
         tooltip.select("text").text(d.y);
         tooltip.select("#type1").text("attr1:"+d.z1);
         tooltip.select("#type2").text("attr2:"+d.z2);
       });
-  
-
-    // update
-    svg.selectAll(".bar")
-      .transition()
-      .ease("circle-out")
-      .duration(500)
-      .attr("x", function(d) { return x(d.x) })
-      .attr("y", function(d) { return y(d.y0 + d.y); })
-      .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); })
-      .attr("width", x.rangeBand())
 
     rect
       .exit()
