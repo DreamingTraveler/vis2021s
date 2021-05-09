@@ -35,6 +35,10 @@
   .y .tick line {
     stroke: #ddd;
   }
+
+  #dropdown-list{
+    width: 20%;
+  }
   </style>
 
 </head>
@@ -42,12 +46,10 @@
 
 </body>
 <script type="text/javascript">
-
 d3.csv("data.csv", function(data){
-
   var margin = {top: 20, right: 160, bottom: 35, left: 30};
 
-  var width = 5000 - margin.left - margin.right,
+  var width = 1500 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
 
   var dataset = d3.layout.stack()(["國文", "英文", "法文", "德文", "日文"].map(function(lang) {
@@ -56,28 +58,14 @@ d3.csv("data.csv", function(data){
     });
   }));
 
-  var x = d3.scale.ordinal()
-    .domain(dataset[0].map(function(d) { return d.x; }))
-    .rangeRoundBands([10, width-10], 0.02);
+  var newDataset;
 
-  var y = d3.scale.linear()
-    .domain([0, d3.max(dataset, function(d) {  return d3.max(d, function(d) { return d.y0 + d.y; });  })])
-    .range([height, 0]);
+  var dataLen = dataset[0].length
+  var winSize = 50
+  var divNum = Math.ceil(dataLen / winSize)
+  var optionList = [...Array(divNum).keys()]
 
   var colors = ["#b33040", "#d25c4d", "#f2b447", "#d9d574", "#7de3e1"];
-
-
-  // Define and draw axes
-  var yAxis = d3.svg.axis()
-    .scale(y)
-    .orient("left")
-    .ticks(5)
-    .tickSize(-width, 0, 0)
-    .tickFormat( function(d) { return d } );
-
-  var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom");
 
   var container = d3.select("body").append("div").attr("id", "container");
   // var container = d3.select("body")
@@ -89,52 +77,142 @@ d3.csv("data.csv", function(data){
     .append("g")
     .attr("class", "bars")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  var updateChart = function(selectedGroupId, isInitial){
+    selectedGroupId = parseInt(selectedGroupId)
+    var startIdx = selectedGroupId * winSize
+    var endIdx = (selectedGroupId + 1) * winSize
+    var newData = data.slice(startIdx, endIdx)
+
+    newDataset = d3.layout.stack()(["國文", "英文", "法文", "德文", "日文"].map(function(lang) {
+      return newData.map(function(d) {
+        return {x: d["編號"], y: +d[lang], z1: d["屬性一"], z2: d["屬性二"]};
+      });
+    }));
+
+    var x = d3.scale.ordinal()
+    .domain(newDataset[0].map(function(d) { return d.x; }))
+    .rangeRoundBands([0, width], 0.05);
+
+    var y = d3.scale.linear()
+      .domain([0, d3.max(newDataset, function(d) {  return d3.max(d, function(d) { return d.y0 + d.y; });  })])
+      .range([height, 0]);
+
+    // Define and draw axes
+    var yAxis = d3.svg.axis()
+      .scale(y)
+      .orient("left")
+      .ticks(10)
+      .tickSize(-width, 0, 0)
+      .tickFormat( function(d) { return d } );
+
+    var xAxis = d3.svg.axis()
+      .scale(x)
+      .orient("bottom");
+
+    if (isInitial){
+      svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis);
+
+        svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
+    }
+    
+    else {
+      svg.selectAll("g .y.axis")
+        .call(yAxis);
+
+      svg.selectAll("g .x.axis")
+        .call(xAxis);
+    }
+    
+
+    var newGroups = svg.selectAll("g.cost")
+      .data(newDataset)
+
+    newGroups
+      .enter().append("g")
+      .attr("class", "cost")
+      .style("fill", function(d, i) { return colors[i]; });
+
+    var rect = newGroups.selectAll("rect")
+      .data(function(d) { return d; })
+
+    rect
+      .enter()
+      .append("rect")
+      .attr("class", "bar")
+      .attr("x", function(d) { return x(d.x) ; })
+      .attr("y", function(d) { return y(d.y0 + d.y); })
+      .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); })
+      .attr("width", x.rangeBand())
+      .style("stroke", "black")
+      .style("stroke-width", "1")
+      .on("mouseover", function() { 
+        tooltip.style("display", null); 
+      })
+      .on("mouseout", function() { 
+        tooltip.style("display", "none"); 
+        d3.select(this).style("opacity", 1)
+      })
+      .on("mousemove", function(d) {
+        var xPosition = d3.mouse(this)[0] - 15;
+        var yPosition = d3.mouse(this)[1] - 25;
+
+        d3.select(this).style("opacity", 0.5)
+        tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+        tooltip.select("text").text(d.y);
+        tooltip.select("#type1").text("attr1:"+d.z1);
+        tooltip.select("#type2").text("attr2:"+d.z2);
+      });
   
-  svg.append("g")
-    .attr("class", "y axis")
-    .call(yAxis);
 
-  svg.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(-50," + height + ")")
-    .call(xAxis);
+    // update
+    svg.selectAll(".bar")
+      .transition()
+      .ease("circle-out")
+      .duration(500)
+      .attr("x", function(d) { return x(d.x) })
+      .attr("y", function(d) { return y(d.y0 + d.y); })
+      .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); })
+      .attr("width", x.rangeBand())
 
+    rect
+      .exit()
+      .remove()
+      
+  }
 
-  // Create groups for each series, rects for each segment 
-  var groups = svg.selectAll("g.cost")
-    .data(dataset)
-    .enter().append("g")
-    .attr("class", "cost")
-    .style("fill", function(d, i) { return colors[i]; });
+  var dropdown = d3.select("body")
+    .append("select")
+    .attr("id", "dropdown-list")
+    .on("change", function(){
+      updateChart(this.value, false)
+    })
 
-  var rect = groups.selectAll("rect")
-    .data(function(d) { return d; })
+  var options = dropdown.selectAll("option")
+    .data(optionList)
     .enter()
-    .append("rect")
-    .attr("x", function(d) { return x(d.x)-50 ; })
-    .attr("y", function(d) { return y(d.y0 + d.y); })
-    .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); })
-    .attr("width", x.rangeBand())
-    .style("stroke", "red")
-    .style("stroke-width", "1")
-    .on("mouseover", function() { 
-      tooltip.style("display", null); 
-    })
-    .on("mouseout", function() { 
-      tooltip.style("display", "none"); 
-      d3.select(this).style("opacity", 1)
-    })
-    .on("mousemove", function(d) {
-      var xPosition = d3.mouse(this)[0] - 15;
-      var yPosition = d3.mouse(this)[1] - 25;
+    .append("option")
 
-      d3.select(this).style("opacity", 0.5)
-      tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
-      tooltip.select("text").text(d.y);
-      tooltip.select("#type1").text("attr1:"+d.z1);
-      tooltip.select("#type2").text("attr2:"+d.z2);
-    });
+  options.text(function(groupId){
+    var start = groupId*winSize+1
+    var end = (groupId+1)*winSize
 
+    if (groupId == divNum - 1) { // the last group
+      end = dataLen
+    }
+
+    return start.toString()+ "~" + end.toString()
+  })
+  .attr("value", function(groupId){
+    return groupId
+  })
+
+  updateChart(0, true)
 
   // Draw legend
   var legend = svg.selectAll(".legend")
@@ -144,13 +222,13 @@ d3.csv("data.csv", function(data){
     .attr("transform", function(d, i) { return "translate(30," + i * 19 + ")"; });
    
   legend.append("rect")
-    .attr("x", width - 68)
+    .attr("x", width)
     .attr("width", 18)
     .attr("height", 18)
     .style("fill", function(d, i) {return colors.slice().reverse()[i];});
    
   legend.append("text")
-    .attr("x", width - 40)
+    .attr("x", width + 25)
     .attr("y", 9)
     .attr("dy", ".35em")
     .style("text-anchor", "start")
@@ -163,7 +241,6 @@ d3.csv("data.csv", function(data){
         case 4: return "日文";
       }
     });
-
 
   // Prep the tooltip bits, initial display is hidden
   var tooltip = svg.append("g")
@@ -201,7 +278,6 @@ d3.csv("data.csv", function(data){
     .attr("font-weight", "bold");
 })
 // Transpose the data into layers
-
 
 </script>
 </html>
