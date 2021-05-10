@@ -2,13 +2,126 @@
 <html lang="zh-Hant-TW">
   <head>
     <meta charset="utf-8">
-    <title>D3 Page Template</title>
-    <script src="http://d3js.org/d3.v6.min.js" charset="utf-8"></script> <!-- v6.5.0 -->
-</head>
-<body>
-    <script type="text/javascript">
-      // Your beautiful D3 code will go here
-    </script>
-  </body>
+    <title>Lab</title>
+    <script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script> <!-- v6.5.0 -->
+    <style type="text/css">
+    	/*.bar {
+        position: relative;
+    		border: 1px black solid;
+    		padding: 5px;
+    		margin: 5px 3px;
+    		display: inline-block;
+    		background-color: violet;
+        vertical-align: bottom;
+    		text-align: center;
+    	}*/
+
+      .bar{
+        fill: url(#grad);
+        stroke: black;
+        stroke-width: 1;
+        opacity: 0.7;
+      }
+
+      .bar:hover{
+        fill: url(#grad_rev);
+      }
+
+      #dataviz{
+        border: 2px black solid;
+      }
+    	body {
+    		border: 1px red solid;
+    		padding: 20px;
+    	}
+    </style>
+  </head>
+  <body>
+    <div id="dataviz"></div>
+    <svg>
+      <defs>
+      <linearGradient id="grad">
+        <stop offset="0%" stop-color="#FFC796" />
+        <stop offset="100%" stop-color="#FF6B95" />
+      </linearGradient>
+      <linearGradient id="grad_rev">
+          <stop offset="5%" stop-color="#d9afd9" />
+          <stop offset="95%" stop-color="#97d9e1" />
+        </linearGradient>
+      </defs>
+    </svg>
+    
+  <body>
+  <script type="text/javascript">
+    var margin = {top: 10, right: 30, bottom: 30, left: 40},
+        width = 1000 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
+
+    var svg = d3.select("#dataviz")
+          .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform",
+                  "translate(" + margin.left + "," + margin.top + ")");
+
+      d3.csv("data.csv", function(data){
+        
+        var x = d3.scaleBand()
+            .domain(data.map(function (d) { return +d['組界']; }))
+            .range([0, width])
+
+        var y = d3.scaleLinear()
+            .domain([d3.min(data, function(d) {return +d['頻率'] }), d3.max(data, function(d) { return +d['頻率'] })])
+            .range([height, 0]);
+
+         // y.domain([0, d3.max(data, function(d) { return +d['頻率']; })]);   // d3.hist has to be called before the Y axis obviously
+
+        var xAxis = svg.append("g")
+           
+        var yAxis = svg.append("g")
+
+        xAxis
+           .attr("transform", "translate(0," + height + ")")
+           .transition()
+           .duration(500)
+           .call(d3.axisBottom(x));
+
+        yAxis
+            .transition()
+            .duration(500)
+            .call(d3.axisLeft(y));
+        
+        svg.selectAll(".bar")
+          .data(data)
+          .enter()
+          .append("rect")
+          .attr("class", "bar")
+          .attr('rx', 2)
+          .attr("x", function(d) { return x(+d['組界']) })
+          .attr("y", function(d) { return y(0) })
+          .attr("width", x.bandwidth())
+          .attr("height", function(d) { return height - y(0)})
+
+        svg.selectAll(".feq-text")
+          .data(data)
+          .enter()
+          .append("text")
+          .attr("class", "feq-text")
+          .attr("x", function(d, i) { return i * (width / data.length) + 10})
+          // .attr("x", function(d) { return x(+d['組界']) + (x.bandwidth()/2 - 5) })
+          .attr("y", function(d) { return y(+d['頻率']/2) })
+          .text(function(d) { return +d['頻率']})
+
+          console.log(svg.selectAll("rect"))
+        svg.selectAll("rect")
+          .transition()
+          .duration(500)
+          .attr("y", function(d) { return y(+d['頻率']) })
+          .attr("height", function(d) { return height - y(+d['頻率'])})
+          .delay(function(d,i){ return(i*20)} )
+
+      });
+  </script>
 </html>
   
