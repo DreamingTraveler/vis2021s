@@ -4,8 +4,10 @@ window.onload = function() {
 	var width = 1500 - margin.left - margin.right,
 	    height = 500 - margin.top - margin.bottom;
 
-	var colors = ["rgba(13, 74, 41, 0.8)", "rgba(92, 125, 90, 0.8)", "rgba(119, 217, 179, 0.8)", 
-	  "rgba(138, 209, 145, 0.8)", "rgba(230, 250, 180, 0.8)"]
+	// var colors = ["rgba(13, 74, 41, 0.8)", "rgba(92, 125, 90, 0.8)", "rgba(119, 217, 179, 0.8)", 
+	//   "rgba(138, 209, 145, 0.8)", "rgba(230, 250, 180, 0.8)"]
+
+	var colors = ["#07000E", "#8A2C02", "#D75404", "#F08B33", "#EECC8D"];
 
 	var container = d3.select("body").append("div").attr("id", "container");
 
