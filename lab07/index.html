@@ -1,14 +1,236 @@
 <!DOCTYPE html>
 <html lang="zh-Hant-TW">
-  <head>
+<head>
     <meta charset="utf-8">
-    <title>D3 Page Template</title>
+    <title>Lab 7</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap');
+
+        h1, div {
+          background-color: rgba(255, 255, 0, 0.1);
+          font-family: 'Noto Serif JP', serif;
+          font-size: 24pt;
+          border: solid 1px black;
+          width: 90%;
+          margin: 5px 3%;
+          padding: 10px;
+        }
+
+        div {
+          font-size: 12pt;
+        }
+        
+        body {
+            background-color: rgba(255, 128, 255, 0.1);
+        }
+
+        video:hover {
+            box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+        }
+
+        path {
+          fill: none;
+          stroke: #3F80B4;
+          stroke-width: 3;
+        }
+
+        #dropfile {
+            height: 15%;
+            width: 50%;
+            border-style: dotted;
+            display: block;
+            text-align: center;
+            animation-name: oxxo;
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+            padding: 80px;
+            background-color: rgba(255, 255, 0, 0.1);
+            font-family: 'Noto Serif JP', serif;
+            margin-bottom: 30px;
+        }
+        #dropfile:hover {
+            background-color: rgba(128, 255, 255, 0.1);
+        }
+        @keyframes oxxo{
+            from {
+                border-style: dotted;;
+                border-color: blue;
+                color: blue;
+            }
+            to {
+                border-style: solid;
+                border-color: red;
+                color: crimson;
+            }
+        }
+        #exhibition-area1{
+          display: inline-block;
+        }
+
+        #svg-word {
+          width: 0%;
+          display: none;
+        }
+      
+    </style>
+    <script src="https://unpkg.com/d3-interpolate-path/build/d3-interpolate-path.min.js"></script>
     <script src="http://d3js.org/d3.v6.min.js" charset="utf-8"></script> <!-- v6.5.0 -->
+    <script src="config.js"></script>
 </head>
 <body>
+    <h1>
+        lab07 漢字變形 Path Transitions
+    </h1>
+    <div>
+      限定使用 D3.js，參考以下影片。
+    	<ul>
+    		<li><a href="https://bocoup.com/blog/improving-d3-path-animation">Improving D3 Path Animation</a></li>
+    		<li><a href="https://bost.ocks.org/mike/path/">https://bost.ocks.org/mike/path/</a></li>
+    	</ul>
+    </div>
+
+<!--     <div>
+  		<video width="400" controls loop autoplay>
+  		  <source src="2.mp4" type="video/mp4">
+  		</video>
+    </div> -->
+    <div id="svg-word"></div>
+    <div id="exhibition-area1">
+      展示區
+      <hr>
+      <!-- <img width="256" src="./uni8607_FZSJSK--GBK1-0.svg">
+      <img width="256" src="./uni5B50_FZSJSK--GBK1-0.svg">
+      <img width="256" src="./uni77BB_FZSJSK--GBK1-0.svg"> -->
+      
+    </div>
+
+    <div id="dropfile">
+      Drag and Drop 展示區
+    </div>
+
+    <div id="exhibition-area2">
+      
+    </div>
+
     <script type="text/javascript">
       // Your beautiful D3 code will go here
+      
+      d3.select("#exhibition-area1").selectAll("svg").remove()
+
+      var svg1 = d3.select("#exhibition-area1")
+        .append("svg")
+        .attr("width", 300)
+        .attr("height", 350)
+
+      var svg2 = d3.select("#exhibition-area1")
+        .append("svg")
+        .attr("width", 300)
+        .attr("height", 350)
+
+      var svg3 = d3.select("#exhibition-area1")
+        .append("svg")
+        .attr("width", 300)
+        .attr("height", 350)
+
+      nameCircleTransition(svg1, nachNamePath)
+      nameCircleTransition(svg2, vorName1Path)
+      nameCircleTransition(svg3, vorName2Path)
+
+      function nameCircleTransition(svg, namePath){
+        svg.append("path")
+          .attr("d", fixedCirclePath)
+          .transition()
+          .duration(5000)
+          .delay(500)
+          .on("start", function loop(){
+            d3.active(this)
+              .attrTween("d", pathTween(namePath, 3))
+              .transition()
+              .duration(5000)
+              .delay(500)
+              .attrTween("d", pathTween(fixedCirclePath, 3))
+              .transition()
+              .on("start", loop);
+          })
+      }
+      
+
+      function pathTween(d1, precision) {
+        return function() {
+          var path0 = this,
+              path1 = path0.cloneNode(),
+              n0 = path0.getTotalLength(),
+              n1 = (path1.setAttribute("d", d1), path1).getTotalLength();
+
+          // Uniform sampling of distance based on specified precision.
+          var distances = [0], i = 0, dt = precision / Math.max(n0, n1);
+          while ((i += dt) < 1) distances.push(i);
+          distances.push(1);
+
+          // Compute point-interpolators at each distance.
+          var points = distances.map(function(t) {
+            var p0 = path0.getPointAtLength(t * n0),
+                p1 = path1.getPointAtLength(t * n1);
+            return d3.interpolate([p0.x, p0.y], [p1.x, p1.y]);
+          });
+
+          return function(t) {
+            return t < 1 ? "M" + points.map(function(p) { return p(t); }).join("L") : d1;
+          };
+        };
+      }
+
+      var svgPath = "";
+      var wordNum = 0;
+      var pathList = [];
+      document.getElementById('dropfile').addEventListener('dragover', (evt) => {
+        evt.preventDefault()
+      })
+        
+      document.getElementById('dropfile').addEventListener('drop', (evt) => {
+        evt.preventDefault()
+
+        const { files } = evt.dataTransfer
+
+
+        const svgFile = evt.dataTransfer.files
+        const svgFileName = files[0].name
+        console.log(svgFile[0])
+
+        var fileReader = new FileReader()
+        fileReader.readAsText(svgFile[0]);
+        wordNum += 1;
+
+        if (wordNum <= 3){
+          fileReader.onload = function(e){
+            
+            d3.select("#svg-word")
+              .append("div")
+              .attr("id", "svg-path"+wordNum)
+              .html(fileReader.result)
+
+            callBack()
+          }
+        }
+        
+        function callBack(){
+          var svg = d3.select("#exhibition-area2")
+            .append("svg")
+            .attr("width", 300)
+            .attr("height", 400)
+
+          d3.select("#svg-path"+wordNum)
+            .select("svg")
+            .select("path")
+            .attr("class", "svg-path")
+            .attr("id", "path"+wordNum)
+
+          svgPath = d3.select("#path"+wordNum).attr("d");
+
+          nameCircleTransition(svg, svgPath)
+        }
+            
+      })
     </script>
-  </body>
-</html>
+  </html>
   
