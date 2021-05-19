@@ -1,0 +1,196 @@
+.line-tsai-1 { 
+    stroke-dasharray: 140;
+    animation-name: draw-tsai-1;
+}
+
+@keyframes draw-tsai-1 {
+    0% {
+        stroke-dashoffset: 140;
+    }
+
+    3% {
+        stroke-dashoffset: 0;
+    }
+}
+
+.line-tsai-2 { 
+    stroke-dasharray: 38;
+    animation-name: draw-tsai-2;
+}
+@keyframes draw-tsai-2 {
+    0%, 3% {
+        stroke-dashoffset: 38;
+    }
+
+    6% {
+        stroke-dashoffset: 0;
+    }
+}
+
+.line-tsai-3 { 
+    stroke-dasharray: 64;
+    animation-name: draw-tsai-3;
+}
+@keyframes draw-tsai-3 {
+    0%, 6% {
+        stroke-dashoffset: 64;
+    }
+
+    9% {
+        stroke-dashoffset: 0;
+    }
+}
+
+.line-tsai-4 { 
+    stroke-dasharray: 47;
+    animation-name: draw-tsai-4;
+}
+@keyframes draw-tsai-4 {
+    0%, 9% {
+        stroke-dashoffset: 47;
+    }
+
+    12% {
+        stroke-dashoffset: 0;
+    }
+}
+
+.line-tsai-5 { 
+    stroke-dasharray: 35;
+    animation-name: draw-tsai-5;
+}
+@keyframes draw-tsai-5 {
+    0%, 12% {
+        stroke-dashoffset: 35;
+    }
+
+    15% {
+        stroke-dashoffset: 0;
+    }
+}
+
+.line-tsai-6 { 
+    stroke-dasharray: 146;
+    animation-name: draw-tsai-6;
+}
+@keyframes draw-tsai-6 {
+    0%, 15% {
+        stroke-dashoffset: 146;
+    }
+
+    20% {
+        stroke-dashoffset: 0;
+    }
+}
+
+.line-tsai-7 { 
+    stroke-dasharray: 17;
+    animation-name: draw-tsai-7;
+}
+@keyframes draw-tsai-7 {
+    0%, 20% {
+        stroke-dashoffset: 17;
+    }
+
+    24% {
+        stroke-dashoffset: 0;
+    }
+}
+
+.line-tsai-8 { 
+    stroke-dasharray: 30;
+    animation-name: draw-tsai-8;
+}
+@keyframes draw-tsai-8 {
+    0%, 24% {
+        stroke-dashoffset: 30;
+    }
+
+    28% {
+        stroke-dashoffset: 0;
+    }
+}
+
+.line-tsai-9 { 
+    stroke-dasharray: 582;
+    animation-name: draw-tsai-9;
+}
+@keyframes draw-tsai-9 {
+    0%, 28% {
+        stroke-dashoffset: 582;
+    }
+
+    40% {
+        stroke-dashoffset: 0;
+    }
+}
+
+.line-tsai-10 { 
+    stroke-dasharray: 45;
+    animation-name: draw-tsai-10;
+}
+@keyframes draw-tsai-10 {
+    0%, 37% {
+        stroke-dashoffset: 45;
+    }
+
+    40% {
+        stroke-dashoffset: 0;
+    }
+}
+
+.line-tsai-11 { 
+    stroke-dasharray: 102;
+    animation-name: draw-tsai-11;
+}
+@keyframes draw-tsai-11 {
+    0%, 40% {
+        stroke-dashoffset: 102;
+    }
+
+    43% {
+        stroke-dashoffset: 0;
+    }
+}
+
+.line-tsai-12 { 
+    stroke-dasharray: 103;
+    animation-name: draw-tsai-12;
+}
+@keyframes draw-tsai-12 {
+    0%, 43% {
+        stroke-dashoffset: 103;
+    }
+
+    46% {
+        stroke-dashoffset: 0;
+    }
+}
+
+.line-tsai-13 { 
+    stroke-dasharray: 30;
+    animation-name: draw-tsai-13;
+}
+@keyframes draw-tsai-13 {
+    0%, 46% {
+        stroke-dashoffset: 30;
+    }
+
+    49% {
+        stroke-dashoffset: 0;
+    }
+}
+
+.line-tsai-14 { 
+    stroke-dasharray: 38;
+    animation-name: draw-tsai-14;
+}
+@keyframes draw-tsai-14 {
+    0%, 49% {
+        stroke-dashoffset: 38;
+    }
+
+    53% {
+        stroke-dashoffset: 0;
+    }
+}

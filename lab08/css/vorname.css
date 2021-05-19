@@ -1,0 +1,94 @@
+.line-yi-1 { 
+    stroke-dasharray: 145;
+    animation-name: draw-yi-1;
+}
+
+@keyframes draw-yi-1 {
+    0%, 56% {
+        stroke-dashoffset: 145;
+    }
+
+    70% {
+        stroke-dashoffset: 0;
+    }
+}
+
+.line-hsuan-1 { 
+    stroke-dasharray: 41;
+    animation-name: draw-hsuan-1;
+}
+
+@keyframes draw-hsuan-1 {
+    0%, 73% {
+        stroke-dashoffset: 41;
+    }
+
+    76% {
+        stroke-dashoffset: 0;
+    }
+}
+
+.line-hsuan-2 { 
+    stroke-dasharray: 128;
+    animation-name: draw-hsuan-2;
+}
+
+@keyframes draw-hsuan-2 {
+    0%, 76% {
+        stroke-dashoffset: 128;
+    }
+
+    81% {
+        stroke-dashoffset: 0;
+    }
+}
+
+
+.line-hsuan-3 { 
+    stroke-dasharray: 135;
+    animation-name: draw-hsuan-3;
+}
+
+@keyframes draw-hsuan-3 {
+    0%, 81% {
+        stroke-dashoffset: 135;
+    }
+
+    85% {
+        stroke-dashoffset: 0;
+    }
+}
+
+
+.line-hsuan-4 { 
+    stroke-dasharray: 136;
+    animation-name: draw-hsuan-4;
+}
+
+@keyframes draw-hsuan-4 {
+    0%, 85%  {
+        stroke-dashoffset: 136;
+    }
+
+    93% {
+        stroke-dashoffset: 0;
+    }
+}
+
+
+.line-hsuan-5 { 
+    stroke-dasharray: 40;
+    animation-name: draw-hsuan-5;
+}
+
+@keyframes draw-hsuan-5 {
+    0%, 93% {
+        stroke-dashoffset: 40;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+
