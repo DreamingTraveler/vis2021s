@@ -7,17 +7,24 @@
     <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script> <!-- v6.5.0 -->
 </head>
 <body>
-  <video id="gurenge-video" onplay="playVideo()" onpause="pauseTransition()" onended="makeSubtitles()" controls loop>
+  <h1>
+      lab09 SVG字幕
+  </h1>
+  <div id="display-area">
+    <h3>Gurenge(紅蓮華) - Piano arrangement by Animenz</h3>
+    <video id="gurenge-video" onplay="playVideo()" onpause="pauseTransition()" onended="makeSubtitles()" controls loop>
       <source src="video/gurenge.mp4" type="video/mp4">
-  </video>
+    </video>
+  </div>
+  
   <div id="subtitles"></div>	
 </body>
 
 <script type="text/javascript">
   // Your beautiful D3 code will go here
   var subtitleArr = [];
-  var width = 900;
-  var height = 600;
+  var width = "80%";
+  var height = "30%";
   var video = document.getElementById("gurenge-video");
 
   video.onseeking = function() {
@@ -26,29 +33,29 @@
 
   d3.select("#gurenge-video")
     .attr("width", width)
-    .attr("height", 450)
+    .attr("height", height)
 
   d3.select("body")
   	.append("svg")
-    .attr("id", "display-area")
+    // .attr("id", "display-area")
   	.attr("width", width)
   	.attr("height", height)
 
-  d3.select("#display-area")
-    .append("text")
-    .text("Lab09 SVG字幕")
-    .attr("class", "title")
-    .attr("x", "50%")
-    .attr("y", 30)
-    .attr("text-anchor", "middle")
+  // d3.select("#display-area")
+  //   .append("text")
+  //   .text("Lab09 SVG字幕")
+  //   .attr("class", "title")
+  //   .attr("x", "50%")
+  //   .attr("y", 30)
+  //   .attr("text-anchor", "middle")
 
-  d3.select("#display-area")
-    .append("text")
-    .text("Gurenge(紅蓮華) - Piano arrangement by Animenz")
-    .attr("class", "title")
-    .attr("x", "50%")
-    .attr("y", 120)
-    .attr("text-anchor", "middle")
+  // d3.select("#display-area")
+  //   .append("text")
+  //   .text("Gurenge(紅蓮華) - Piano arrangement by Animenz")
+  //   .attr("class", "title")
+  //   .attr("x", "50%")
+  //   .attr("y", 120)
+  //   .attr("text-anchor", "middle")
 
   var playCount = 0;
 
@@ -117,12 +124,12 @@
 
         });
 
-      var subtitleSvg = d3.select("body")
+      var subtitleSvg = d3.select("#display-area")
         .append("svg")
         .attr("id", "subtitle-svg")
         .attr("width", width)
         .attr("height", 50)
-        .attr("transform", "translate(0,"+ 150 + " )")
+
 
       subtitleSvg.selectAll("text")
         .data(subtitleArr)
@@ -141,7 +148,7 @@
         .attr("duration", function(d){
           return d.duration;
         })
-        .attr("x", width / 2)
+        .attr("x", "50%")
         .attr("y", 30)
         .attr("text-anchor", "middle")
         .attr("opacity", 0)

@@ -3,41 +3,42 @@ font-family: "HakusyuKaisyo";
 src: url("fonts/HakusyuKaisyo.ttf");
 }
 
-svg, video{
-	position:absolute; 
-	top:50%; 
-	left:50%; 
-	margin-left:-480px; 
-	margin-top:-420px;
-	border: 1px solid gray;
+h1, div {
+    background-color: rgba(255, 255, 0, 0.1);
+    font-family: 'HakusyuKaisyo', serif;
+    font-size: 24pt;
+    border: solid 1px black;
+    width: 90%;
+    margin: 5px auto;
+    padding: 10px;
+}
+
+#subtitle-svg{
+	position: relative; 
+	/*bottom: 60%; 
+	right: 20%;*/ 
+	border-style: none;
+	z-index: 2;
+	transform: translate(0, -400px);
 }
 
 svg text {
-	font-size: 25px;
+	font-size: 2vw;
     fill: white;
-    stroke: black;
+    /*stroke: black;*/
     font-family: 'HakusyuKaisyo';
-    /*z-index: 2;*/
 }
 
-#subtitle-svg {
-	border-style: none;
-	z-index: 2;
-}
 
 #display-area {
 	z-index: -1;
 	background-image: linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
 }
 
-#play {
-	font-size: 80px;
-	cursor: pointer;
-}
-
 #gurenge-video {
 	z-index: 1;
-	transform: translate(0, 150px);
+	background-color: black;
+	/*transform: translate(0, 150px);*/
 	/*display: none;*/
 }
 
