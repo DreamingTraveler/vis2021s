@@ -8,12 +8,12 @@ svg, video{
 	top:50%; 
 	left:50%; 
 	margin-left:-480px; 
-	margin-top:-270px;
+	margin-top:-420px;
 	border: 1px solid gray;
 }
 
 svg text {
-	font-size: 35px;
+	font-size: 25px;
     fill: white;
     stroke: black;
     font-family: 'HakusyuKaisyo';
@@ -43,4 +43,9 @@ svg text {
 
 #play:hover {
 	box-shadow: 0px 0px 5px 5px rgba(255, 128, 128, 0.5);
+}
+
+.title {
+	fill: black;
+    stroke: none;
 }
