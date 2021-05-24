@@ -7,7 +7,7 @@
     <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script> <!-- v6.5.0 -->
 </head>
 <body>
-  <video id="gurenge-video" onplay="playVideo()" controls loop>
+  <video id="gurenge-video" onplay="playVideo()" onpause="pauseTransition()" onended="makeSubtitles()" controls loop>
       <source src="video/gurenge.mp4" type="video/mp4">
   </video>
   <div id="subtitles"></div>	
@@ -18,6 +18,11 @@
   var subtitleArr = [];
   var width = 900;
   var height = 600;
+  var video = document.getElementById("gurenge-video");
+
+  video.onseeking = function() {
+      resetSubtitleAnimation()
+  };
 
   d3.select("#gurenge-video")
     .attr("width", width)
@@ -32,6 +37,7 @@
   d3.select("#display-area")
     .append("text")
     .text("Lab09 SVG字幕")
+    .attr("class", "title")
     .attr("x", "50%")
     .attr("y", 30)
     .attr("text-anchor", "middle")
@@ -39,18 +45,48 @@
   d3.select("#display-area")
     .append("text")
     .text("Gurenge(紅蓮華) - Piano arrangement by Animenz")
+    .attr("class", "title")
     .attr("x", "50%")
     .attr("y", 120)
     .attr("text-anchor", "middle")
 
   var playCount = 0;
+
+  function resetSubtitleAnimation() {
+    var currentTime = video.currentTime;
+
+    d3.selectAll(".subtitle")
+        .attr("opacity", 0)
+        .transition()
+        .delay(function(d){
+          return (d.start - d.duration / 2 - currentTime) * 1000;
+        })
+        .duration(function(d){
+          return (d.duration + d.duration / 2) * 1000;
+        })
+        .attr('opacity', 1)
+        .transition()
+        .duration(function(d){
+          return 0;
+        })
+        .attr('opacity', 0)
+  }
   
-  function playVideo(){
+  function playVideo() {
     playCount += 1;
 
-    if (playCount == 1){
+    if (playCount == 1) {
       makeSubtitles()
     }
+
+    else {
+      resetSubtitleAnimation()
+    }
+  }
+
+  function pauseTransition() {
+    d3.selectAll(".subtitle")
+      .interrupt()
   }
 
   function makeSubtitles(){
@@ -95,16 +131,20 @@
         .text(function(d){
           return d.content;
         })
+        .attr("class", "subtitle")
         .attr("start", function(d){
           return d.start;
         })
         .attr("end", function(d){
           return d.end;
         })
+        .attr("duration", function(d){
+          return d.duration;
+        })
         .attr("x", width / 2)
         .attr("y", 30)
         .attr("text-anchor", "middle")
-        .attr('opacity', 0)
+        .attr("opacity", 0)
         .transition()
         .delay(function(d){
           return (d.start - d.duration / 2) * 1000;
@@ -112,12 +152,12 @@
         .duration(function(d){
           return (d.duration + d.duration / 2) * 1000;
         })
-        .attr('opacity', 1)
+        .attr("opacity", 1)
         .transition()
         .duration(function(d){
           return (d.duration / 6.0 * 1000.0);
         })
-        .attr('opacity', 0)
+        .attr("opacity", 0)
 
     });
   }
