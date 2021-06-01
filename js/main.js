@@ -58,7 +58,7 @@
 		}
 
 		else{
-			$("#colorlib-main").css("background-image", "url('../img/cat1.jpg')")
+			$("#colorlib-main").css("background-image", "url('img/cat1.jpg')")
 			$(".colorlib-nav-toggle").removeClass("dark")
 		}
 	})
