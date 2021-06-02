@@ -1,25 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Lab00 個人大頭照</title>
 	<meta charset="utf-8">
 	<style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap');
+    @font-face {
+      font-family: "ZMWen Regular Script";
+      src: url("../fonts/Wen.ttf");
+      unicode-range: U+4E00-9FFF, U+3040-30FF, U+31F0-31FF;
+    }
+
+    @font-face {
+      font-family: "Gabriola";
+      src: url("../fonts/Gabriola.ttf");
+      unicode-range: U+00-024F;
+    }
 
     h1 {
       background-color: rgba(255, 255, 0, 0.1);
-      font-family: 'Noto Serif JP', serif;
+      font-family: "ZMWen Regular Script", "Gabriola", "Noto Serif JP", serif;
       font-size: 24pt;
-      border: solid 1px black;
+      border: solid 2px black;
+      border-radius: 1%;
       width: 90%;
       margin: 5px auto;
       padding: 10px;
     }
 
 		div {
-			font-family: 'Noto Serif JP', serif;
-			font-size: 12pt;
-			border: solid 1px black;
+			font-family: "ZMWen Regular Script", "Gabriola", "Noto Serif JP", serif;
+      unicode-range: U+00-024F;
+			font-size: 24pt;
+			border: solid 2px black;
+      border-radius: 1%;
 			width: 90%;
 			margin: 5px auto;
 			padding: 10px;
@@ -28,11 +42,12 @@
     div:hover, ul:hover, h1:hover, h3:hover {
       background-color: rgba(255, 255, 128, 0.1);
       /* offset-x | offset-y | blur-radius | spread-radius | color */
-      box-shadow: 0px 0px 5px 5px rgba(128, 255, 255, 0.5);
+      box-shadow: 0px 3px 5px 0px rgba(5, 5, 5, 0.3);
     }
 
     svg, iframe {
-      border: 1px solid red;
+      border: 1px solid black;
+      transform: translate(50%, 0);
     }
 	</style>
 </head>
