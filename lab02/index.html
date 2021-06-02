@@ -1,270 +1,282 @@
 <!DOCTYPE html>
-
 <html>
-	<head>
-		<script src="https://d3js.org/d3.v4.js"></script>
+<head>
+	<title>Lab02 - treemap</title>
+	<meta charset="utf-8">
+	<script src="https://d3js.org/d3.v4.js"></script>
+	
+	<style>
+  		@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap');
+
+  		@font-face {
+		  font-family: "ZMWen Regular Script";
+		  src: url("../fonts/Wen.ttf");
+		  unicode-range: U+4E00-9FFF;
+		}
+
+		@font-face {
+		  font-family: "Gabriola";
+		  src: url("../fonts/Gabriola.ttf");
+		  unicode-range: U+00-024F;
+		}
+
+	    div, ul {
+	      border: solid 2px black;
+  		  border-radius: 1%;
+	    /*  margin: 5px;
+	      padding: 10px;*/
+	      background-color: rgba(255, 255, 128, 0.1);
+	    }
+
+	    div:hover, ul:hover {
+	      background-color: rgba(255, 128, 128, 0.1);
+	    }
+
+		html, body {
+			font-family: "ZMWen Regular Script", "Gabriola", "Noto Serif JP", serif;
+			font-weight: bold;
+			letter-spacing: 1px;
+			height: 100%;
+			width: 100%;
+			padding: 0;
+			margin: 0;
+			padding: 10px;
+	        background-color: rgba(255, 255, 0, 0.02);
+		}
+
+		svg {
+	        font-family: "ZMWen Regular Script", "Gabriola", "Noto Serif JP", serif; /*Segoe Script, */
+	        font-weight: bold;
+		}
+		@keyframes oxxo{
+		    from {
+		        border-style: dotted;
+		        border-color: blue;
+		        color: blue;
+		    }
+		    to {
+		        border-style: solid;
+		        border-color: red;
+		        color: crimson;
+		    }
+		}
 		
-		<style>
-      		@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap');
+		#treemap {
+			height: 1200px;
+			width: 3300px;
+		}
+	</style>
+</head>
+<body>
+	<div style="padding-left: 25px; font-size: 50px">
+		Lab 02 treemap
+	</div>
+	<ul style="font-size: 25px">
+		<li style="color: red">Esophagus Cancer DNA Methylation Data</li>
+		<li>Data Source: <a href="https://portal.gdc.cancer.gov/legacy-archive">TCGA legacy (The Cancer Genome Atlas Legacy)</a> </li>
+		<li>Columns: 1. Probe ID 2. Chromosome 3. Genomic Coordinate 4. Beta Value</li>
+		<!-- <li><a href="https://www.d3-graph-gallery.com/graph/treemap_custom.html">Treemap customization in d3.js</a></li>
+		<li><a href="http://blog.infographics.tw/2015/10/d3js-tutorial-treemap-and-budget/">D3.js 實戰 － 利用 Treemap Layout 將政府預算視覺化</a></li> -->
+	</ul>
+	
+	<div id="treemap"></div>
+	
+	
+	<script>
+		//產生SVG
+		function mkSVG(allChr, data){
+			const margin = {top: 10, right: 10, bottom: 10, left: 10};
+			const height = 1200 - margin.top - margin.bottom;
+			const width = 3300 - margin.left - margin.right;
+			
+			const svg = d3.select("#treemap")
+						  .append('svg')
+						  .attr('width', width + margin.left + margin.right)
+						  .attr('height', height + margin.top + margin.bottom)
+						  .append('g')
+						  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+						
+			//利用d3.hierarchy產生x y的資料
+			const d3ds = d3.hierarchy(data).sum(({value}) => value)
 
-		    div, ul {
-		      border: solid black 1.5px;
-		    /*  margin: 5px;
-		      padding: 10px;*/
-		      background-color: rgba(255, 255, 128, 0.1);
-		    }
+			//設定svg位置
+			d3.treemap()
+			  .size([width, height])
+			  .paddingTop(25)
+			  .paddingRight(5)
+			  .paddingInner(10) 
+			  (d3ds)
+			  
+			  
+			//設定指導教授顏色
+			const color = d3.scaleOrdinal()
+							.domain(allChr)
+							.range([ "#402D54", "#D18975", "#8FD175", "#ff66ff", "#ffb366", "#80ff80", "#d279a6", "#ff6633", "#6600ff", "#00bfff", "#53c653", "#ff8000"])
+							
+			//設定透明度，分數越低越透明
+			const opacity = d3.scaleLinear()
+							.domain([1, 0])
+							.range([1,.1])
+			
 
-		    div:hover, ul:hover {
-		      background-color: rgba(255, 128, 128, 0.1);
-		    }
+			// drop shadow
+			var defs = svg.append('defs');
 
-			html, body {
-				font-family: 'Gabriola', serif;
-				font-weight: bold;
-				letter-spacing: 1px;
-				height: 100%;
-				width: 100%;
-				padding: 0;
-				margin: 0;
-				padding: 10px;
-		        background-color: rgba(255, 255, 0, 0.02);
+		    var filter = defs.append('filter')
+		      .attr('id', 'drop-shadow')
+		      .attr('height', '130%');
+
+		    filter.append('feGaussianBlur')
+		      .attr('in', 'SourceAlpha')
+		      .attr('stdDeviation', 7)
+		      .attr('result', 'blur');
+
+		    filter.append('feOffset')
+		      .attr('in', 'blur')
+		      .attr('dx', 5)
+		      .attr('dy', 5)
+		      .attr('result', 'offsetBlur');
+
+		    var feMerge = filter.append('feMerge');
+
+		    feMerge.append('feMergeNode')
+		      .attr('in', 'offsetBlur')
+		    feMerge.append('feMergeNode')
+		      .attr('in', 'SourceGraphic');
+			//化長方形
+			svg
+				.selectAll('rectangle')
+				.data(d3ds.leaves())
+				.enter()
+				.append('rect')
+				 .attr('x', ({x0}) => x0)
+				 .attr('y', ({y0}) => y0)
+				 .attr('width', ({x0,x1}) => x1-x0)
+				 .attr('height', ({y0,y1}) => y1-y0)
+				 
+				 .style('stroke', 'red')
+				 .style('fill', ({parent}) => color(parent.data.name))
+				 .style('opacity', (d) => opacity(d.data.value*0.01))
+				 .on("mouseover", function(d){
+					d3.select(event.currentTarget)
+					.attr('filter', 'url(#drop-shadow)')
+					.style('opacity', (d) => opacity(1.5 - d.data.value*0.01))
+				  })
+				 .on("mouseout", function(d){
+					d3.select(event.currentTarget)
+					.attr('filter', 'none')
+					.style('opacity', (d) => opacity(d.data.value*0.01));
+				 });
+			
+			//寫學生姓名
+			svg
+				.selectAll('#probeID')
+				.data(d3ds.leaves())
+				.enter()
+				.append('text')
+				 .attr('x', ({x0}) => x0 + 1)
+				 .attr('y', ({y0}) => y0 + 30)
+				 .text(({data}) => data.name)
+				 .attr('font-size', '1.5rem')
+				 .attr('fill', 'white')
+			
+			//寫學生分數
+			svg
+				.selectAll('#methylationDeg')
+				.data(d3ds.leaves())
+				.enter()
+				.append('text')
+				 .attr('x', ({x0}) => x0 + 1)
+				 .attr('y', ({y0}) => y0 + 70)
+				 .text(({data}) => data.value)
+				 .attr('font-size', '1.5rem')
+				 .attr('fill', 'white')
+				 
+			svg
+				.selectAll('#betaVal')
+				.data(d3ds.leaves())
+				.enter()
+				.append('text')
+				 .attr('x', ({x0}) => x0 + 1)
+				 .attr('y', ({y0}) => y0 + 110)
+				 .text(({data}) => parseFloat(data.betaVal).toFixed(6))
+				 .attr('font-size', '1.5rem')
+				 .attr('fill', 'white')
+
+				 
+			svg
+				.selectAll('#chromosome')
+				.data(d3ds.descendants().filter(function(d){return d.depth==1}))
+				.enter()
+				.append('text')
+				 .attr('x', ({x0}) => x0 + 1)
+				 .attr('y', ({y0}) => y0 + 21)
+				 .text(({data}) => "Chr-"+data.name)
+				 .attr('font-size', '1.6rem')
+				 .attr('fill', 'black')
+			
+			return treemap
+		}	
+	</script>
+	
+	<script>
+		d3.csv("https://raw.githubusercontent.com/DreamingTraveler/vis2021s/master/lab02/TCGA_Esophagus_T_Lv3_sample_with_cols.csv", function(data) {
+			// const treemapContainer = document.getElementById('treemap')
+
+			const allChr = []
+			const d3Json = {
+				children: [],
+				name: 'vis2021s'
 			}
 
-			svg {
-		        font-family: 'Gabriola', serif; /*Segoe Script, */
-		        font-weight: bold;
-			}
-			@keyframes oxxo{
-			    from {
-			        border-style: dotted;
-			        border-color: blue;
-			        color: blue;
-			    }
-			    to {
-			        border-style: solid;
-			        border-color: red;
-			        color: crimson;
-			    }
+			//先由小到大排列，算出名次、級距、再算出分數
+			const mapping = new Array(data.length).fill(-1)
+			const scoreSort = data.sort((x,y) => {
+				let a = isNaN(parseFloat(x.Beta_Val)) ? 0 : x.Beta_Val
+				let b = isNaN(parseFloat(y.Beta_Val)) ? 0 : y.Beta_Val
+				
+				return b-a // b-a => DESC; a-b => ASC
+			}).map(e => isNaN(parseFloat(e.Beta_Val)) ? 0 : e.Beta_Val)
+			
+			const scoreSet = [...new Set([...scoreSort.filter(e => e<=30)])]
+			const step = (100-60) / scoreSet.length
+			
+			for(let i of scoreSort){
+				const idx = scoreSet.indexOf(i)
+				let score
+				if(idx == -1){
+					score = 0
+				}
+				else{
+					score = (100 - step * idx).toFixed(2)
+				}
+				mapping[i] = score
 			}
 			
-			#treemap {
-				height: 1200px;
-				width: 3300px;
-			}
-		</style>
-	</head>
-	<body>
-		<div style="padding-left: 25px; font-size: 50px">
-			Lab 02 treemap
-		</div>
-		<ul style="font-size: 25px">
-			<li style="color: red">Esophagus Cancer DNA Methylation Data</li>
-			<li>Data Source: <a href="https://portal.gdc.cancer.gov/legacy-archive">TCGA legacy (The Cancer Genome Atlas Legacy)</a> </li>
-			<li>Columns: 1. Probe ID 2. Chromosome 3. Genomic Coordinate 4. Beta Value</li>
-			<!-- <li><a href="https://www.d3-graph-gallery.com/graph/treemap_custom.html">Treemap customization in d3.js</a></li>
-			<li><a href="http://blog.infographics.tw/2015/10/d3js-tutorial-treemap-and-budget/">D3.js 實戰 － 利用 Treemap Layout 將政府預算視覺化</a></li> -->
-		</ul>
-		
-		<div id="treemap"></div>
-		
-		
-		<script>
-			//產生SVG
-			function mkSVG(allChr, data){
-				const margin = {top: 10, right: 10, bottom: 10, left: 10};
-				const height = 1200 - margin.top - margin.bottom;
-				const width = 3300 - margin.left - margin.right;
+			
+			for(let subject of data){
+				const chr = subject.Chromosome
 				
-				const svg = d3.select("#treemap")
-							  .append('svg')
-							  .attr('width', width + margin.left + margin.right)
-							  .attr('height', height + margin.top + margin.bottom)
-							  .append('g')
-							  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-							
-				//利用d3.hierarchy產生x y的資料
-				const d3ds = d3.hierarchy(data).sum(({value}) => value)
-
-				//設定svg位置
-				d3.treemap()
-				  .size([width, height])
-				  .paddingTop(25)
-				  .paddingRight(5)
-				  .paddingInner(10) 
-				  (d3ds)
-				  
-				  
-				//設定指導教授顏色
-				const color = d3.scaleOrdinal()
-								.domain(allChr)
-								.range([ "#402D54", "#D18975", "#8FD175", "#ff66ff", "#ffb366", "#80ff80", "#d279a6", "#ff6633", "#6600ff", "#00bfff", "#53c653", "#ff8000"])
-								
-				//設定透明度，分數越低越透明
-				const opacity = d3.scaleLinear()
-								.domain([1, 0])
-								.range([1,.1])
-				
-
-				// drop shadow
-				var defs = svg.append('defs');
-
-			    var filter = defs.append('filter')
-			      .attr('id', 'drop-shadow')
-			      .attr('height', '130%');
-
-			    filter.append('feGaussianBlur')
-			      .attr('in', 'SourceAlpha')
-			      .attr('stdDeviation', 7)
-			      .attr('result', 'blur');
-
-			    filter.append('feOffset')
-			      .attr('in', 'blur')
-			      .attr('dx', 5)
-			      .attr('dy', 5)
-			      .attr('result', 'offsetBlur');
-
-			    var feMerge = filter.append('feMerge');
-
-			    feMerge.append('feMergeNode')
-			      .attr('in', 'offsetBlur')
-			    feMerge.append('feMergeNode')
-			      .attr('in', 'SourceGraphic');
-				//化長方形
-				svg
-					.selectAll('rectangle')
-					.data(d3ds.leaves())
-					.enter()
-					.append('rect')
-					 .attr('x', ({x0}) => x0)
-					 .attr('y', ({y0}) => y0)
-					 .attr('width', ({x0,x1}) => x1-x0)
-					 .attr('height', ({y0,y1}) => y1-y0)
-					 
-					 .style('stroke', 'red')
-					 .style('fill', ({parent}) => color(parent.data.name))
-					 .style('opacity', (d) => opacity(d.data.value*0.01))
-					 .on("mouseover", function(d){
-						d3.select(event.currentTarget)
-						.attr('filter', 'url(#drop-shadow)')
-						.style('opacity', (d) => opacity(1.5 - d.data.value*0.01))
-					  })
-					 .on("mouseout", function(d){
-						d3.select(event.currentTarget)
-						.attr('filter', 'none')
-						.style('opacity', (d) => opacity(d.data.value*0.01));
-					 });
-				
-				//寫學生姓名
-				svg
-					.selectAll('#probeID')
-					.data(d3ds.leaves())
-					.enter()
-					.append('text')
-					 .attr('x', ({x0}) => x0 + 1)
-					 .attr('y', ({y0}) => y0 + 30)
-					 .text(({data}) => data.name)
-					 .attr('font-size', '1.5rem')
-					 .attr('fill', 'white')
-				
-				//寫學生分數
-				svg
-					.selectAll('#methylationDeg')
-					.data(d3ds.leaves())
-					.enter()
-					.append('text')
-					 .attr('x', ({x0}) => x0 + 1)
-					 .attr('y', ({y0}) => y0 + 70)
-					 .text(({data}) => data.value)
-					 .attr('font-size', '1.5rem')
-					 .attr('fill', 'white')
-					 
-				svg
-					.selectAll('#betaVal')
-					.data(d3ds.leaves())
-					.enter()
-					.append('text')
-					 .attr('x', ({x0}) => x0 + 1)
-					 .attr('y', ({y0}) => y0 + 110)
-					 .text(({data}) => parseFloat(data.betaVal).toFixed(6))
-					 .attr('font-size', '1.5rem')
-					 .attr('fill', 'white')
-
-					 
-				svg
-					.selectAll('#chromosome')
-					.data(d3ds.descendants().filter(function(d){return d.depth==1}))
-					.enter()
-					.append('text')
-					 .attr('x', ({x0}) => x0 + 1)
-					 .attr('y', ({y0}) => y0 + 21)
-					 .text(({data}) => "Chr-"+data.name)
-					 .attr('font-size', '1.6rem')
-					 .attr('fill', 'black')
-				
-				return treemap
-			}	
-		</script>
-		
-		<script>
-			d3.csv("https://raw.githubusercontent.com/DreamingTraveler/vis2021s/master/lab02/TCGA_Esophagus_T_Lv3_sample_with_cols.csv", function(data) {
-				// const treemapContainer = document.getElementById('treemap')
-
-				const allChr = []
-				const d3Json = {
-					children: [],
-					name: 'vis2021s'
-				}
-
-				//先由小到大排列，算出名次、級距、再算出分數
-				const mapping = new Array(data.length).fill(-1)
-				const scoreSort = data.sort((x,y) => {
-					let a = isNaN(parseFloat(x.Beta_Val)) ? 0 : x.Beta_Val
-					let b = isNaN(parseFloat(y.Beta_Val)) ? 0 : y.Beta_Val
-					
-					return b-a // b-a => DESC; a-b => ASC
-				}).map(e => isNaN(parseFloat(e.Beta_Val)) ? 0 : e.Beta_Val)
-				
-				const scoreSet = [...new Set([...scoreSort.filter(e => e<=30)])]
-				const step = (100-60) / scoreSet.length
-				
-				for(let i of scoreSort){
-					const idx = scoreSet.indexOf(i)
-					let score
-					if(idx == -1){
-						score = 0
-					}
-					else{
-						score = (100 - step * idx).toFixed(2)
-					}
-					mapping[i] = score
-				}
-				
-				
-				for(let subject of data){
-					const chr = subject.Chromosome
-					
-					if(allChr.indexOf(chr) == -1){  // no match (there is no chr in allChr)
-						allChr.push(chr)
-						d3Json.children.push({
-							name: chr,
-							children: []
-						})
-					}
-					
-					const betaVal = isNaN(subject.Beta_Val) ? 0 : subject.Beta_Val
-					d3Json.children.find(e => e.name == chr).children.push({
-						name: subject.Probe_ID,
-						betaVal,
-						value: mapping[betaVal]
+				if(allChr.indexOf(chr) == -1){  // no match (there is no chr in allChr)
+					allChr.push(chr)
+					d3Json.children.push({
+						name: chr,
+						children: []
 					})
-					
 				}
+				
+				const betaVal = isNaN(subject.Beta_Val) ? 0 : subject.Beta_Val
+				d3Json.children.find(e => e.name == chr).children.push({
+					name: subject.Probe_ID,
+					betaVal,
+					value: mapping[betaVal]
+				})
+				
+			}
 
-				mkSVG(allChr, d3Json)
-			})
-					
-		</script>
-	
-	</body>
-	
+			mkSVG(allChr, d3Json)
+		})
+				
+	</script>
+</body>
 </html>
