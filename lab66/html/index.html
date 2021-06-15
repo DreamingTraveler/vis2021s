@@ -4,7 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-
+    <title>
+        lab66(期末計畫) - R2D3 Decision Tree Visualization
+    </title>
     <style>
         html,
         body {
@@ -48,29 +50,13 @@
 
         <div id="left">
             <div id="training-section">
-				<!-- <h1>
-					癌症相關基因分析
-				</h1>
-                <h2>目的</h2>
-                <ul>
-                    <li>觀察哪些基因是影響正常細胞突變為癌細胞的關鍵</li>
-                    <li>根據這些作為生物標記(biomarker)的基因來推測未受測者是否容易罹患癌症</li>
-                </ul>
-                <h2>資料集相關資訊</h2>
-                <ul><h3>來源:</h3>
-                    <li>Illumina DNA甲基化晶片 (Illumina human methylation 450 beadchip)</li>
-                    <li>美國癌症基因體圖譜計畫 (TCGA, The Cancer Genome Atlas) </li>
-                </ul> -->
                 <iframe src="Data Visualization Final.html" width="100%" height="100%" seamless="seamless" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
             </div>
             <div id="testing-section">
 				
             </div>
         </div>
-        
-        
-        
-        
+
         <script src="./lib/d3.v3.min.js"></script>
         <script src="./lib/binarydecisiontree.min.js"></script>
 
@@ -90,61 +76,11 @@
                     .on("resize", function(){ resizeRight() })
                 ;
 
-
-                /**
-                 * 填版面，不然全部都是白色的很單調
-                 * 這兩個 section 是要讓同學放說明資料和圖片的地方
-                */
-
-                var data_source_text = "";
-    //             d3.select("#training-section")
-    //                 .selectAll("p")
-    //                 .data(d3.range(1, 10))
-    //                 .enter()
-    //                 .append("p")
-    //                 .text(Lipsum)
-    //             ;
-
-    //             d3.select("#testing-section")
-    //                 .selectAll("p")
-    //                 .data(d3.range(1, 10))
-    //                 .enter()
-    //                 .append("p")
-    //                 .text(Lipsum)
-    //             ;
-				
-				// d3.select("#training-section")
-    //                 .selectAll("img")
-				// 	.data(d3.range(1, 4))
-				// 	.enter()
-				// 	.append("img")
-				// 	.attr("src", function(d){ return "media/" + d + ".png"})
-    //                 .style('height', '350px')
-    //                 .style('width', '350px')
-    //             ;
-
-    //             d3.select("#testing-section")
-    //                 .selectAll("img")
-				// 	.data(d3.range(4, 7))
-				// 	.enter()
-				// 	.append("img")
-				// 	.attr("src", function(d){ return "media/" + d + ".png"})
-    //                 .style('height', '350px')
-    //                 .style('width', '350px')
-    //             ;
-				
-				
-
                 var bdt = new BinaryDecisionTree({
                     el: "#train-vs-test",
                     trainingSection: "#training-section",
                     testSection: "#testing-section",
-                    
-					/**
-                     * 預設會讓小球在上方排排站
-                     * 如果不要排排站的話，必須要把這個 paramater 設成 false
-                     * 如果要排排站的話，直接註解掉這行就行
-                    */
+
                     //flood: false
                 });
 

@@ -9,7 +9,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="mobile-web-app-capable" content="yes">
     <title>
-        資料可視化 - 期末專題
+        資料可視化 - 期末專題 - HackMD
     </title>
     <link rel="icon" type="image/png" href="https://hackmd.io/favicon.png">
     <link rel="apple-touch-icon" href="https://hackmd.io/apple-touch-icon.png">
@@ -1399,8 +1399,8 @@
         padding-right: 0 !important
     }
 
-    #資料集資訊, #資料內容詳細說明, #資料前處理{
-        margin-top: 10vh;
+    #重要名詞, #資料集資訊, #資料內容詳細說明, #資料前處理{
+        margin-top: 5vh;
     }
     </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -1418,8 +1418,14 @@
         <h2 id="主題-癌症相關基因資料分析" data-id="主題-癌症相關基因資料分析"><a class="anchor hidden-xs" href="#主題-癌症相關基因資料分析" title="主題-癌症相關基因資料分析"><span class="octicon octicon-link"></span></a><span>主題: 癌症相關基因資料分析</span></h2>
         <h2 id="目的" data-id="目的"><a class="anchor hidden-xs" href="#目的" title="目的"><span class="octicon octicon-link"></span></a><span>目的</span></h2>
         <ul>
-            <li><span>觀察哪些基因是影響正常細胞突變為癌細胞的關鍵</span></li>
+            <li><span>觀察哪些基因在特定癌症中容易造成正常細胞突變為癌細胞</span></li>
             <li><span>根據這些作為生物標記(biomarker)的基因來推測未受測者是否容易罹患癌症</span></li>
+        </ul>
+        <h2 id="重要名詞" data-id="重要名詞"><a class="anchor hidden-xs" href="#重要名詞" title="重要名詞"><span class="octicon octicon-link"></span></a><span>重要名詞</span></h2>
+        <ul>
+            <li><strong><span>表觀遺傳(epigenetics):</span></strong><span> 在不改變DNA序列的前提下, 生物受到外在環境影響, 並透過某些機制導致基因表現的改變, 而這些基因同時也會對遺傳造成影響</span></li>
+            <li><strong><span>甲基化(methylation):</span></strong><span> 透過某些化學物質使基因的表現沉默化, 可以想像成基因表現的開關. 當受到甲基化的程度越高時, 基因的表現程度越低</span></li>
+            <li><strong><span>β值:</span></strong><span> 範圍介於0~1, 可表示特定位點受甲基化的程度, 此值越高代表受甲基化程度越高</span></li>
         </ul>
         <h2 id="資料集資訊" data-id="資料集資訊"><a class="anchor hidden-xs" href="#資料集資訊" title="資料集資訊"><span class="octicon octicon-link"></span></a><span>資料集資訊</span></h2>
         <ul>
@@ -1449,26 +1455,21 @@
                 </ul>
             </li>
         </ul>
+        <div id="chartdiv"></div>
         <h2 id="資料內容詳細說明" data-id="資料內容詳細說明"><a class="anchor hidden-xs" href="#資料內容詳細說明" title="資料內容詳細說明"><span class="octicon octicon-link"></span></a><span>資料內容詳細說明</span></h2>
         <p><img src="https://i.imgur.com/Na5JiXo.png" alt="" loading="lazy"></p>
-        <ul>
+        <ul data-original-title="" title="">
             <li><span>第一列為header, 主要分為兩部分, Sample_Type表示從受測者身上取得的細胞類別 (labels), 而cg開頭的欄位為探針編號 (features)</span>
                 <ul>
                     <li><span>甲基化探針(methylation probe): 一個基因裡通常會有多個甲基化位點, 在這些位點上利用探針可以測得其甲基化的程度</span></li>
                 </ul>
             </li>
-            <li><span>從第二列開始, 每一列代表一位受測者在特定探針所測得之β值</span>
-                <ul>
-                    <li><strong><span>β值:</span></strong><span> 範圍介於0~1, 可表示特定位點受甲基化的程度, 此值越高代表受甲基化程度越高</span></li>
-                    <li><span>表觀遺傳(epigenetics): 在不改變DNA序列的前提下, 生物受到外在環境影響, 並透過某些機制導致基因表現的改變, 而這些基因同時也會對遺傳造成影響</span></li>
-                    <li><strong><span>甲基化(methylation):</span></strong><span> 透過某些化學物質使基因的表現沉默化, 可以想像成基因表現的開關. 當受到甲基化的程度越高時, 基因的表現程度越低</span></li>
-                </ul>
-            </li>
+            <li><span>從第二列開始, 每一列代表一位受測者在特定探針所測得之β值</span></li>
         </ul>
         <h2 id="資料前處理" data-id="資料前處理"><a class="anchor hidden-xs" href="#資料前處理" title="資料前處理"><span class="octicon octicon-link"></span></a><span>資料前處理</span></h2>
-        <ul>
+        <ul data-original-title="" title="">
             <li><span>使用R語言, 將所有受測者的資訊從idat檔擷取出來, 並將當中的β值另存成一個csv檔</span></li>
-            <li><span>找出癌細胞與正常細胞差異較大的探針編號 (大約挑選了70個)</span></li>
+            <li><span>找出癌細胞與正常細胞β值差異較大的探針編號 (大約挑選了70個)</span></li>
             <li><span>將每位受測者在這些探針編號上的β值記錄在一個csv檔, 而這個檔案就是我們要拿來建決策樹的資料</span></li>
         </ul>
     </div>
@@ -1484,9 +1485,10 @@
                             <ul class="nav">
                                 <li><a href="#主題-癌症相關基因資料分析" title="主題: 癌症相關基因資料分析">主題: 癌症相關基因資料分析</a></li>
                                 <li><a href="#目的" title="目的">目的</a></li>
+                                <li><a href="#重要名詞" title="重要名詞">重要名詞</a></li>
                                 <li><a href="#資料集資訊" title="資料集資訊">資料集資訊</a></li>
                                 <li class=""><a href="#資料內容詳細說明" title="資料內容詳細說明">資料內容詳細說明</a></li>
-                                <li class=""><a href="#資料前處理" title="資料前處理">資料前處理</a></li>
+                                <li><a href="#資料前處理" title="資料前處理">資料前處理</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -1502,9 +1504,10 @@
                     <ul class="nav">
                         <li><a href="#主題-癌症相關基因資料分析" title="主題: 癌症相關基因資料分析">主題: 癌症相關基因資料分析</a></li>
                         <li><a href="#目的" title="目的">目的</a></li>
+                        <li><a href="#重要名詞" title="重要名詞">重要名詞</a></li>
                         <li><a href="#資料集資訊" title="資料集資訊">資料集資訊</a></li>
                         <li class=""><a href="#資料內容詳細說明" title="資料內容詳細說明">資料內容詳細說明</a></li>
-                        <li class=""><a href="#資料前處理" title="資料前處理">資料前處理</a></li>
+                        <li><a href="#資料前處理" title="資料前處理">資料前處理</a></li>
                     </ul>
                 </li>
             </ul>
@@ -1514,6 +1517,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gist-embed/2.6.0/gist-embed.min.js" integrity="sha256-KyF2D6xPIJUW5sUDSs93vWyZm+1RzIpKCexxElmxl8g=" crossorigin="anonymous" defer></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+    <script src="js/amchart.js"></script>
     <script>
     var markdown = $(".markdown-body");
     //smooth all hash trigger scrolling
