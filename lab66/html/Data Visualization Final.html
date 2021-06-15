@@ -22,6 +22,18 @@
     <style>
     @import url(https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i|Source+Code+Pro:300,400,500|Source+Sans+Pro:300,300i,400,400i,600,600i|Source+Serif+Pro&subset=latin-ext);
 
+    @font-face {
+      font-family: "ZMWen Regular Script";
+      src: url("../../fonts/Wen.ttf");
+      unicode-range: U+4E00-9FFF, U+3040-30FF, U+31F0-31FF;
+    }
+
+    @font-face {
+      font-family: "Gabriola";
+      src: url("../../fonts/Gabriola.ttf");
+      unicode-range: U+00-024F;
+    }
+
     .hljs {
         display: block;
         background: #fff;
@@ -96,7 +108,7 @@
     }
 
     .markdown-body {
-        font-size: 16px;
+        font-size: 4vw;
         line-height: 1.5;
         word-wrap: break-word
     }
@@ -159,7 +171,7 @@
     }
 
     .markdown-body blockquote {
-        font-size: 16px;
+        font-size: 20px;
         padding: 0 1em;
         color: #777;
         border-left: .25em solid #ddd
@@ -177,7 +189,7 @@
     .popover kbd {
         display: inline-block;
         padding: 3px 5px;
-        font-size: 11px;
+        font-size: 14px;
         line-height: 10px;
         color: #555;
         vertical-align: middle;
@@ -1097,7 +1109,7 @@
     }
 
     .markdown-body {
-        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif
+        font-family: "ZMWen Regular Script", "Gabriola", "Noto Serif JP",-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif
     }
 
     html[lang^=ja] .markdown-body {
@@ -1399,9 +1411,7 @@
         padding-right: 0 !important
     }
 
-    #重要名詞, #資料集資訊, #資料內容詳細說明, #資料前處理{
-        margin-top: 5vh;
-    }
+ 
     </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
