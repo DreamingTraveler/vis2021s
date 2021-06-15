@@ -53,7 +53,13 @@
 		$(this).parent("li").addClass("colorlib-active")
 
 		if ($(this).html() != "Home") {
-			$("#colorlib-main").css("background-image", "linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%)")
+			if ($(this).html() == "lab66") {
+				$("#colorlib-main").css("background-image", "linear-gradient(to right, #434343 0%, black 100%)")
+			}
+			else {
+				$("#colorlib-main").css("background-image", "linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%)")
+			}
+			
 			$(".colorlib-nav-toggle").addClass("dark")
 		}
 
