@@ -1,0 +1,37 @@
+html {
+    height: 200%;
+}
+
+body {
+    height: 200%;
+    background-image: linear-gradient(rgba(245, 240, 228, 0.9), rgba(245, 240, 228, 0.9)), url('../media/DNA.jpg'); 
+    background-position: center; 
+    background-repeat: repeat; 
+    background-size: cover;
+}
+#training-section, #testing-section {
+    height: 100%;
+	overflow: hidden;
+}
+
+#train-vs-test {
+    height: 100%;
+    position: fixed;
+    max-width: 100%;
+}
+
+.padding {
+    height: 100%;
+}
+
+#right {
+    width: 60%;
+    height: 100%;
+    position: relative;
+    float: right;
+}
+#left {
+    width: 40%;
+    height: 100%;
+    float: left;
+}

@@ -7,106 +7,67 @@
     <title>
         lab66(期末計畫) - R2D3 Decision Tree Visualization
     </title>
-    <style>
-        html,
-        body {
-            height: 200%;
-        }
-        #training-section, #testing-section {
-            height: 100%;
-			overflow: hidden;
-        }
-
-        #train-vs-test {
-            height: 100%;
-            position: fixed;
-            max-width: 100%;
-        }
-
-        .padding {
-            height: 100%;
-        }
-
-        #right {
-            width: 60%;
-            height: 100%;
-            position: relative;
-            float: right;
-        }
-        #left {
-            width: 40%;
-            height: 100%;
-            float: left;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
-<body style="background-image: linear-gradient(rgba(245, 240, 228, 0.9), rgba(245, 240, 228, 0.9)), url('media/DNA.jpg'); background-position: center; background-repeat: repeat; background-size: cover;">
+<body>
+    <div id="right">
+        <div id="train-vs-test"></div>
+    </div>
 
-
-        <div id="right">
-            <div id="train-vs-test"></div>
+    <div id="left">
+        <div id="training-section">
+            <iframe src="Data Visualization Final.html" width="100%" height="100%" seamless="seamless" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
         </div>
-
-        <div id="left">
-            <div id="training-section">
-                <iframe src="Data Visualization Final.html" width="100%" height="100%" seamless="seamless" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
-            </div>
-            <div id="testing-section">
-				
-            </div>
+        <div id="testing-section">
+			
         </div>
+    </div>
 
-        <script src="./lib/d3.v3.min.js"></script>
-        <script src="./lib/binarydecisiontree.min.js"></script>
+    <script src="./lib/d3.v3.min.js"></script>
+    <script src="./lib/binarydecisiontree.min.js"></script>
 
-        <script>
-            var Lipsum = "";
-
-            window.onload = function () {
-                function resizeRight(){
-                    d3.select("#train-vs-test")
-                        .style("width", d3.select("#right").node().clientWidth + "px")
-                    ;
-                }
-
-                resizeRight();
-
-                d3.select(window)
-                    .on("resize", function(){ resizeRight() })
+    <script>
+        window.onload = function () {
+            function resizeRight(){
+                d3.select("#train-vs-test")
+                    .style("width", d3.select("#right").node().clientWidth + "px")
                 ;
-
-                var bdt = new BinaryDecisionTree({
-                    el: "#train-vs-test",
-                    trainingSection: "#training-section",
-                    testSection: "#testing-section",
-
-                    //flood: false
-                });
-
-                bdt.setDataFromJson("./dataset2.json", function(){
-                    bdt.install();
-                    bdt.play();
-                })
-
-                /**
-                 * or
-                 * bdt.setDataFromObject({ 
-                 *  tree_data: tree_data,
-                 *  tree_training_set: tree_training_set,
-                 *  tree_stats: tree_stats, 
-                 *  tree_test_set: tree_test_set, 
-                 *  test_stats : test_stats
-                 * })
-                 * 同步函式，不需要 callback
-                 * bdt.install();
-                 * bdt.play();
-                */
             }
-        </script>
 
+            resizeRight();
+
+            d3.select(window)
+                .on("resize", function(){ resizeRight() })
+            ;
+
+            var bdt = new BinaryDecisionTree({
+                el: "#train-vs-test",
+                trainingSection: "#training-section",
+                testSection: "#testing-section",
+
+                //flood: false
+            });
+
+            bdt.setDataFromJson("./dataset2.json", function(){
+                bdt.install();
+                bdt.play();
+            })
+
+            /**
+             * or
+             * bdt.setDataFromObject({ 
+             *  tree_data: tree_data,
+             *  tree_training_set: tree_training_set,
+             *  tree_stats: tree_stats, 
+             *  tree_test_set: tree_test_set, 
+             *  test_stats : test_stats
+             * })
+             * 同步函式，不需要 callback
+             * bdt.install();
+             * bdt.play();
+            */
+        }
+    </script>
 </body>
-
-
-
 </html>
