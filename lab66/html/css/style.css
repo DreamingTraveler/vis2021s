@@ -43,8 +43,23 @@ body {
     position: relative;
     float: right;
 }
+
 #left {
     width: 40%;
     height: 100%;
     float: left;
+}
+
+.cat-img-section {
+    display: flex;
+    flex-direction: column;
+    transform: translateX(25%);
+}
+
+.cat-img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin-bottom: 20vh;
+    box-shadow: 5px 3px 3px 0px rgba(49, 50, 51, 0.7);
 }
