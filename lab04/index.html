@@ -11,23 +11,36 @@ https://www.oxxostudio.tw/articles/201501/svg-d3-13-csv.html
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap');
 
+            @font-face {
+                font-family: "ZMWen Regular Script";
+                src: url("../fonts/Wen.ttf");
+                unicode-range: U+4E00-9FFF, U+51C3, U+3040-30FF, U+31F0-31FF, U+3000-303F, U+FF00-FFEF;
+            }
+
+            @font-face {
+                font-family: "Gabriola";
+                src: url("../fonts/Gabriola.ttf");
+                unicode-range: U+00-024F;
+            }
+
             h1 {
-              background-color: rgba(255, 255, 0, 0.1);
-              font-family: 'Noto Serif JP', serif;
-              font-size: 24pt;
-              border: solid 1px black;
-              width: 90%;
-              margin: 5px auto;
-              padding: 10px;
+                background-color: rgba(255, 255, 0, 0.1);
+                font-family: "ZMWen Regular Script", "Gabriola", "Noto Serif JP", serif;
+                font-size: 5vw;
+                border: solid 1px black;
+                width: 90%;
+                margin: 5px auto;
+                padding: 10px;
             }
 
             body {
                 background-color: rgba(255, 128, 255, 0.1);
+                font-family: "ZMWen Regular Script", "Gabriola", "Noto Serif JP", serif;
             }
             table {
                 border-collapse: collapse;
                 border: 2px black solid;
-                font: 24px sans-serif;
+                font-size: 3vw;
                 margin-left: auto;
                 margin-right: auto;
             }
@@ -47,18 +60,16 @@ https://www.oxxostudio.tw/articles/201501/svg-d3-13-csv.html
             img:hover {
                 box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
             }
+
+            #div1{
+                margin-left: 22vw;
+            }
         </style>
     </head>
     <body>
         <h1>
             lab04 製作 CSV 表格，table data cell 內放置 img
         </h1>
-        <div>
-            <ul>
-                <li><a href="http://bl.ocks.org/ndarville/7075823">From CSV to HTML table (Simple)</a></li>
-                <li><a href="https://www.oxxostudio.tw/articles/201501/svg-d3-13-csv.html">SVG D3.js - CSV 數據處理</a></li>
-            </ul>
-        </div>
         <div id="div1"></div>
         <script src="./d3.v3.min.js"></script> 
 
