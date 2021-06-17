@@ -5,40 +5,124 @@
     <title>Lab 05</title>
     <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script> <!-- v6.5.0 -->
     <style type="text/css">
+      :root {
+        --brown: #b78846;
+      }
+      @font-face {
+          font-family: "ZMWen Regular Script";
+          src: url("../fonts/Wen.ttf");
+          unicode-range: U+4E00-9FFF, U+3040-30FF, U+31F0-31FF, U+3000-303F, U+FF00-FFEF;
+      }
+
+      @font-face {
+          font-family: "Gabriola";
+          src: url("../fonts/Gabriola.ttf");
+          unicode-range: U+00-024F;
+      }
+
+      * {
+          font-family: "ZMWen Regular Script", "Gabriola", "Noto Serif JP", serif;
+      }
+
+      text {
+          font-size: 1.3vw;
+      }
+
       .bar{
-        fill: url(#grad);
-        stroke: black;
-        stroke-width: 1;
-        opacity: 0.7;
+          fill: url(#grad);
+          stroke: black;
+          stroke-width: 1;
+          opacity: 0.7;
       }
 
       .bar:hover{
-        fill: url(#grad_rev);
+          fill: url(#grad_rev);
       }
 
       #dataviz{
-        border: 2px black solid;
+          border: 2px black solid;
       }
+
+      *:before, *:after {
+          box-sizing: border-box;
+      }
+
     	body {
-    		border: 1px red solid;
-    		padding: 20px;
+      		border: 3px solid var(--brown);
+      		padding: 10px;
     	}
+
+      body:before, body:after {
+          content: "•";
+          position: absolute;
+          width: 14px;
+          height: 14px;
+          font-size: 14px;
+          color: var(--brown);
+          border: 2px solid var(--brown);
+          line-height: 12px;
+          top: 21px;
+          text-align: center;
+      }
+
+
+      body:after {
+          right: 21px;
+      }
+
+      #inner-block {
+          position: relative;
+          border: 2px solid var(--brown);
+          padding: 40px;
+      }
+
+      #inner-block:before, #inner-block:after {
+          content: "•";
+          position: absolute;
+          width: 14px;
+          height: 14px;
+          font-size: 14px;
+          color: var(--brown);
+          border: 2px solid var(--brown);
+          line-height: 12px;
+          bottom: -2px;
+          text-align: center;
+      }
+
+      #inner-block:before {
+          left: -2px;
+      }
+
+      #inner-block:after {
+          right: -2px;
+      }
+
+
+
+      #title {
+          text-align: center;
+          font-size: 3vw;
+      }
     </style>
   </head>
   <body>
-    <div id="dataviz"></div>
-    <svg>
-      <defs>
-      <linearGradient id="grad">
-        <stop offset="0%" stop-color="#FFC796" />
-        <stop offset="100%" stop-color="#FF6B95" />
-      </linearGradient>
-      <linearGradient id="grad_rev">
-          <stop offset="5%" stop-color="#d9afd9" />
-          <stop offset="95%" stop-color="#97d9e1" />
+    <div id="inner-block">
+      <h1 id="title">Lab05 Histogram</h1>
+      <div id="dataviz"></div>
+      <svg width="0" height="0">
+        <defs>
+        <linearGradient id="grad">
+          <stop offset="0%" stop-color="#FFC796" />
+          <stop offset="100%" stop-color="#FF6B95" />
         </linearGradient>
-      </defs>
-    </svg>
+        <linearGradient id="grad_rev">
+            <stop offset="5%" stop-color="#d9afd9" />
+            <stop offset="95%" stop-color="#97d9e1" />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+    
     
   <body>
   <script type="text/javascript">
@@ -63,8 +147,6 @@
         var y = d3.scaleLinear()
             .domain([d3.min(data, function(d) {return +d['頻率'] }), d3.max(data, function(d) { return +d['頻率'] })])
             .range([height, 0]);
-
-         // y.domain([0, d3.max(data, function(d) { return +d['頻率']; })]);   // d3.hist has to be called before the Y axis obviously
 
         var xAxis = svg.append("g")
            
@@ -99,14 +181,23 @@
           .attr("class", "feq-text")
           .attr("x", function(d, i) { return i * (width / data.length) + 10})
           // .attr("x", function(d) { return x(+d['組界']) + (x.bandwidth()/2 - 5) })
-          .attr("y", function(d) { return y(+d['頻率']/2) })
+          .attr("y", function(d) { 
+            var freq = +d['頻率'];
+            if (freq <= 2) {
+              return y(2.5)
+            }
+
+            else {
+              return y(freq/2) 
+            }
+              
+          })
           .text(function(d) { return +d['頻率']})
           .attr("fill-opacity", 0)
           .transition()
           .delay(function(d,i){ return (i*100)+1000 })
           .attr("fill-opacity", 1)
 
-          console.log(svg.selectAll("rect"))
         svg.selectAll("rect")
           .transition()
           .duration(2000)
