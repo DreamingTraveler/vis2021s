@@ -1,7 +1,7 @@
 window.onload = function() {
   	var margin = {top: 20, right: 160, bottom: 35, left: 30};
 
-	var width = 1500 - margin.left - margin.right,
+	var width = 1000 - margin.left - margin.right,
 	    height = 500 - margin.top - margin.bottom;
 
 	// var colors = ["rgba(13, 74, 41, 0.8)", "rgba(92, 125, 90, 0.8)", "rgba(119, 217, 179, 0.8)", 
@@ -9,7 +9,7 @@ window.onload = function() {
 
 	var colors = ["#07000E", "#8A2C02", "#D75404", "#F08B33", "#EECC8D"];
 
-	var container = d3.select("body").append("div").attr("id", "container");
+	var container = d3.select("#inner-block").append("div").attr("id", "container");
 
 	var svg = container
 	  .append("svg")
@@ -289,32 +289,35 @@ window.onload = function() {
 	      
 	  tooltip.append("rect")
 	    .attr("x", 30)
-	    .attr("width", 50)
+	    .attr("width", 60)
 	    .attr("height", 80)
 	    .attr("fill", "white")
 	    .style("opacity", 0.5);
 
 	  tooltip.append("text")
-	    .attr("x", 50)
+	    .attr("x", 60)
 	    .attr("dy", "1.2em")
 	    .style("text-anchor", "middle")
-	    .attr("font-size", "12px")
+	    .style("letter-spacing", "1px")
+	    .attr("font-size", "20px")
 	    .attr("font-weight", "bold");
 
 	  tooltip.append("text")
-	    .attr("x", 50)
-	    .attr("dy", "3.2em")
+	    .attr("x", 60)
+	    .attr("dy", "2.4em")
 	    .attr("id", "type1")
 	    .style("text-anchor", "middle")
-	    .attr("font-size", "12px")
+	    .style("letter-spacing", "1px")
+	    .attr("font-size", "20px")
 	    .attr("font-weight", "bold");
 
 	  tooltip.append("text")
-	    .attr("x", 50)
-	    .attr("dy", "5.2em")
+	    .attr("x", 60)
+	    .attr("dy", "3.6em")
 	    .attr("id", "type2")
 	    .style("text-anchor", "middle")
-	    .attr("font-size", "12px")
+	    .style("letter-spacing", "1px")
+	    .attr("font-size", "20px")
 	    .attr("font-weight", "bold");
 	})
 };

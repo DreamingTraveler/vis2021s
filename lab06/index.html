@@ -1,19 +1,26 @@
-<!--
-  https://blockbuilder.org/guilhermesimoes/8913c15adf7dd2cab53a
-  
-  http://bl.ocks.org/mstanaland/6100713
-
-  https://www.d3-graph-gallery.com/graph/barplot_stacked_basicWide.html
--->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>lab06</title>
+  <title>Lab06- Histogram</title>
   <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <script src="js/script.js"></script>
   <style type="text/css">
+  :root {
+      --brown: #b78846;
+  }
+  @font-face {
+      font-family: "ZMWen Regular Script";
+      src: url("../fonts/Wen.ttf");
+      unicode-range: U+4E00-9FFF, U+3040-30FF, U+31F0-31FF, U+3000-303F, U+FF00-FFEF;
+  }
+
+  @font-face {
+      font-family: "Gabriola";
+      src: url("../fonts/Gabriola.ttf");
+      unicode-range: U+00-024F;
+  }
+
   @keyframes blink {
       0% {
              background-color: rgba(255,0,0,1)
@@ -25,76 +32,143 @@
              background-color: rgba(255,0,0,1)
       }
   }
+
+  * {
+      font-family: "ZMWen Regular Script", "Gabriola", "Noto Serif JP", serif;
+  }
+
   svg {
-    font: 10px sans-serif;
-    shape-rendering: crispEdges;
+      font-size: 1.3vw;
+      shape-rendering: crispEdges;
   }
 
   div#container{
-    overflow: scroll;
+      overflow: scroll;
   }
 
   .axis path,
   .axis line {
-    fill: none;
-    stroke: #000;
+      fill: none;
+      stroke: #000;
   }
  
   path.domain {
-    stroke: none;
+      stroke: none;
   }
  
   .y .tick line {
-    stroke: #ddd;
+      stroke: #ddd;
   }
 
   #settings{
-    display: inline-block;
-    width: 100%;
+      display: inline-block;
+      width: 100%;
   }
 
   #dropdown-area{
-    float: left;
-    width: 20vw;
-    margin: 30px 0 0 150px;
+      float: left;
+      width: 25vw;
+      margin: 30px 0 0 150px;
+      font-size: 2vw;
   }
 
   #dropdown-list{
-    width: 15vw;
-    padding: 10px;
-    
+      width: 15vw;
+      padding: 10px;
+      
 
-    background: #9bc7de;
-    outline: none;
-    cursor: pointer;
-    border-radius: 5px;
+      background: #9bc7de;
+      outline: none;
+      cursor: pointer;
+      border-radius: 5px;
 
-    font-weight: bold;
+      font-weight: bold;
+      font-size: 2vw;
   }
 
   #input-bin-area{
-    margin: 30px 0 0 5px;
+      margin: 30px 0 0 5px;
+      font-size: 2vw;
   }
 
   #num-bins{
-    width: 5%;
-    padding: 5px;
-    
-    background: #9bc7de;
-    outline: none;
-    cursor: pointer;
-    border-radius: 5px;
+      width: 5%;
+      padding: 5px;
+      font-size: 2vw;
+      
+      background: #9bc7de;
+      outline: none;
+      cursor: pointer;
+      border-radius: 5px;
 
-    font-weight: bold;
+      font-weight: bold;
   }
 
-  
+  *:before, *:after {
+      box-sizing: border-box;
+  }
 
+  body {
+      border: 3px solid var(--brown);
+      padding: 10px;
+  }
+
+  body:before, body:after {
+      content: "•";
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      font-size: 14px;
+      color: var(--brown);
+      border: 2px solid var(--brown);
+      line-height: 12px;
+      top: 21px;
+      text-align: center;
+  }
+
+
+  body:after {
+      right: 21px;
+  }
+
+  #inner-block {
+      position: relative;
+      border: 2px solid var(--brown);
+      padding: 40px;
+  }
+
+  #inner-block:before, #inner-block:after {
+      content: "•";
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      font-size: 14px;
+      color: var(--brown);
+      border: 2px solid var(--brown);
+      line-height: 12px;
+      bottom: -2px;
+      text-align: center;
+  }
+
+  #inner-block:before {
+      left: -2px;
+  }
+
+  #inner-block:after {
+      right: -2px;
+  }
+
+  #title {
+      text-align: center;
+      font-size: 3vw;
+  }
   </style>
 
 </head>
 <body>
-
+  <div id="inner-block">
+    <h1 id="title">Lab06 Histogram</h1>
+  </div>
 </body>
 </html>
   
