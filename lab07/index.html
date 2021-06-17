@@ -6,22 +6,48 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap');
 
-        h1, div {
-          background-color: rgba(255, 255, 0, 0.1);
-          font-family: 'Noto Serif JP', serif;
-          font-size: 24pt;
-          border: solid 1px black;
-          width: 90%;
-          margin: 5px 3%;
-          padding: 10px;
+        @font-face {
+            font-family: "ZMWen Regular Script";
+            src: url("../fonts/Wen.ttf");
+            unicode-range: U+4E00-9FFF, U+3040-30FF, U+31F0-31FF, U+3000-303F, U+FF00-FFEF;
+        }
+
+        @font-face {
+            font-family: "Gabriola";
+            src: url("../fonts/Gabriola.ttf");
+            unicode-range: U+00-024F;
+        }
+
+        * {
+            font-family: "ZMWen Regular Script", "Gabriola", "Noto Serif JP", serif;
+        }
+
+        body {
+            margin: 0;
         }
 
         div {
-          font-size: 12pt;
+            font-size: 24pt;
+            border: solid 2px black;
+            border-radius: 5px;
+            width: 75%;
+            margin: auto;
+            margin-bottom: 20px;
         }
         
-        body {
-            background-color: rgba(255, 128, 255, 0.1);
+
+        h3 {
+            border-bottom: solid 2px black;
+            margin: auto;
+            padding: 5px;
+        }
+
+        #title {
+            background-color: #011e4088;
+            text-align: center;
+            font-size: 5vw;
+            color: #fcf8e3;
+            margin: 0 0 70px 0;
         }
 
         video:hover {
@@ -29,21 +55,20 @@
         }
 
         path {
-          fill: none;
-          stroke: #3F80B4;
-          stroke-width: 3;
+            fill: none;
+            stroke: #3F80B4;
+            stroke-width: 3;
+            transform: translateY(30px);
         }
 
         #dropfile {
-            height: 15%;
-            width: 50%;
+            width: 75%;
             border-style: dotted;
             display: block;
             text-align: center;
             animation-name: oxxo;
             animation-duration: 2s;
             animation-iteration-count: infinite;
-            padding: 80px;
             background-color: rgba(255, 255, 0, 0.1);
             font-family: 'Noto Serif JP', serif;
             margin-bottom: 30px;
@@ -63,13 +88,10 @@
                 color: crimson;
             }
         }
-        #exhibition-area1{
-          display: inline-block;
-        }
 
         #svg-word {
-          width: 0%;
-          display: none;
+            width: 0%;
+            display: none;
         }
       
     </style>
@@ -78,34 +100,25 @@
     <script src="config.js"></script>
 </head>
 <body>
-    <h1>
+    <h1 id="title">
         lab07 漢字變形 Path Transitions
     </h1>
     <div>
-      限定使用 D3.js，參考以下影片。
+      <h3>限定使用 D3.js，參考以下影片。</h3>
     	<ul>
     		<li><a href="https://bocoup.com/blog/improving-d3-path-animation">Improving D3 Path Animation</a></li>
     		<li><a href="https://bost.ocks.org/mike/path/">https://bost.ocks.org/mike/path/</a></li>
     	</ul>
     </div>
 
-<!--     <div>
-  		<video width="400" controls loop autoplay>
-  		  <source src="2.mp4" type="video/mp4">
-  		</video>
-    </div> -->
     <div id="svg-word"></div>
     <div id="exhibition-area1">
-      展示區
-      <hr>
-      <!-- <img width="256" src="./uni8607_FZSJSK--GBK1-0.svg">
-      <img width="256" src="./uni5B50_FZSJSK--GBK1-0.svg">
-      <img width="256" src="./uni77BB_FZSJSK--GBK1-0.svg"> -->
+      <h3>展示區</h3>
       
     </div>
 
     <div id="dropfile">
-      Drag and Drop 展示區
+      <p style="font-size: 3vw;">Drag and Drop 展示區</p>
     </div>
 
     <div id="exhibition-area2">
@@ -140,15 +153,15 @@
         svg.append("path")
           .attr("d", fixedCirclePath)
           .transition()
-          .duration(5000)
+          .duration(3000)
           .delay(500)
           .on("start", function loop(){
             d3.active(this)
-              .attrTween("d", pathTween(namePath, 3))
+              .attrTween("d", pathTween(namePath, 5))
               .transition()
-              .duration(5000)
+              .duration(3000)
               .delay(500)
-              .attrTween("d", pathTween(fixedCirclePath, 3))
+              .attrTween("d", pathTween(fixedCirclePath, 5))
               .transition()
               .on("start", loop);
           })
