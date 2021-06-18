@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8">
     <title>Lab 7</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap');
 
@@ -22,39 +24,35 @@
             font-family: "ZMWen Regular Script", "Gabriola", "Noto Serif JP", serif;
         }
 
-        body {
-            margin: 0;
+        .hero-head {
+            font-size: 2.5vw;
         }
 
-        div {
-            font-size: 24pt;
-            border: solid 2px black;
-            border-radius: 5px;
-            width: 75%;
-            margin: auto;
-            margin-bottom: 20px;
-        }
-        
-
-        h3 {
-            border-bottom: solid 2px black;
-            margin: auto;
-            padding: 5px;
+        .title {
+            font-size: 4vw;
         }
 
-        #title {
-            background-color: #011e4088;
-            text-align: center;
-            font-size: 5vw;
-            color: #fcf8e3;
-            margin: 0 0 70px 0;
+        .subtitle {
+            font-size: 3vw;
         }
 
-        video:hover {
-            box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+        .video-link-list, .display-area {
+            background-color: #f0fc6255;
         }
 
-        path {
+        .video-link-list h3 {
+            font-size: 2vw;
+        }
+
+        .video-link-list ul {
+            font-size: 1.5vw;
+        }
+
+        #exhibition-area1 h3 {
+            font-size: 2vw;
+        }
+
+        #exhibition-area1 svg path {
             fill: none;
             stroke: #3F80B4;
             stroke-width: 3;
@@ -63,30 +61,40 @@
 
         #dropfile {
             width: 75%;
-            border-style: dotted;
+            border-style: solid;
             display: block;
-            text-align: center;
+            text-align: center !important;
             animation-name: oxxo;
-            animation-duration: 2s;
+            animation-duration: 5s;
             animation-iteration-count: infinite;
             background-color: rgba(255, 255, 0, 0.1);
-            font-family: 'Noto Serif JP', serif;
+            margin: auto;
             margin-bottom: 30px;
         }
+
         #dropfile:hover {
             background-color: rgba(128, 255, 255, 0.1);
         }
+
         @keyframes oxxo{
-            from {
-                border-style: dotted;;
-                border-color: blue;
-                color: blue;
+            0% {
+                border-color: #9e9e98;
+                color: violet;
             }
-            to {
-                border-style: solid;
-                border-color: red;
-                color: crimson;
+
+            50% {
+                border-color: #9e9e9800;
+                color: #f249ba;
             }
+
+            100% {
+                border-color: #9e9e98;
+                color: violet;
+            }
+        }
+
+        #exhibition-area2 {
+            display: none;
         }
 
         #svg-word {
@@ -95,35 +103,78 @@
         }
       
     </style>
+    <script src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <script src="https://unpkg.com/d3-interpolate-path/build/d3-interpolate-path.min.js"></script>
     <script src="https://d3js.org/d3.v6.min.js" charset="utf-8"></script> <!-- v6.5.0 -->
     <script src="config.js"></script>
 </head>
 <body>
-    <h1 id="title">
-        lab07 漢字變形 Path Transitions
-    </h1>
-    <div>
-      <h3>限定使用 D3.js，參考以下影片。</h3>
-    	<ul>
-    		<li><a href="https://bocoup.com/blog/improving-d3-path-animation">Improving D3 Path Animation</a></li>
-    		<li><a href="https://bost.ocks.org/mike/path/">https://bost.ocks.org/mike/path/</a></li>
-    	</ul>
-    </div>
+    <section class="hero is-primary is-medium">
+      <div class="hero-head">
+        <nav class="navbar">
+          <div class="container">
+            <div class="navbar-brand">
+              <a class="navbar-item" href="../index.html">
+                NTUT - Data Visualization
+              </a>
+              <span class="navbar-burger" data-target="navbarMenuHeroA">
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            </div>
 
-    <div id="svg-word"></div>
-    <div id="exhibition-area1">
-      <h3>展示區</h3>
-      
-    </div>
+            <div id="navbarMenuHeroA" class="navbar-menu">
+              <div class="navbar-end">
+                <span class="navbar-item">
+                  <span class="icon">
+                    <a class="button is-primary" href="https://github.com/DreamingTraveler/vis2021s/tree/master/lab07" target="_blank"><i class="fab fa-github fa-2x"></i></a>
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
 
-    <div id="dropfile">
-      <p style="font-size: 3vw;">Drag and Drop 展示區</p>
-    </div>
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <p class="title">
+            Lab07
+          </p>
+          <p class="subtitle">
+            漢字變形 Path Transitions
+          </p>
+        </div>
+      </div>
+    </section>
 
-    <div id="exhibition-area2">
-      
-    </div>
+    <section class="section">
+      <div class="box video-link-list">
+        <h3>
+          <i class="fas fa-exclamation-triangle"></i>
+          限定使用 <span style="color: red; text-decoration: underline;">D3.js</span>，參考以下影片：
+        </h3>
+
+        <ul>
+          <li><a href="https://bocoup.com/blog/improving-d3-path-animation">Improving D3 Path Animation</a></li>
+          <li><a href="https://bost.ocks.org/mike/path/">https://bost.ocks.org/mike/path/</a></li>
+        </ul>
+      </div>
+
+      <div class="box display-area">
+        <div id="svg-word"></div>
+        <div id="exhibition-area1">
+          <h3>展示區</h3>
+        </div>
+      </div>
+
+      <div class="box" id="dropfile">
+        <p style="font-size: 3vw;">Drag and Drop 展示區</p>
+      </div>
+
+      <div class="box" id="exhibition-area2"></div>
+    </section>
 
     <script type="text/javascript">
       // Your beautiful D3 code will go here
@@ -208,7 +259,9 @@
 
         const svgFile = evt.dataTransfer.files
         const svgFileName = files[0].name
-        console.log(svgFile[0])
+        
+        d3.select("#exhibition-area2")
+          .style("display", "block")
 
         var fileReader = new FileReader()
         fileReader.readAsText(svgFile[0]);
