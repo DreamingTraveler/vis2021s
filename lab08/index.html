@@ -3,45 +3,108 @@
 <head>
     <meta charset="utf-8">
     <title>Lab 8</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
     <link rel="stylesheet" href="css/nachname.css">
     <link rel="stylesheet" href="css/vorname.css">
+    <link rel="stylesheet" href="css/style.css">   
+    <script src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <script src="https://d3js.org/d3.v6.min.js" charset="utf-8"></script> <!-- v6.5.0 -->
 </head>
 <body>
-    <h1>
-        lab08 漢字書寫 (鉛筆字) (毛筆字也OK!) Path Animation
-    </h1>
-    <div>
-      限定使用 D3.js，參考以下影片。
-    	<ul>
-    		<li><a href="https://bl.ocks.org/basilesimon/f164aec5758d16d51d248e41af5428e4">Animate path in D3</a></li>
-    		<li><a href="https://codepen.io/MyXoToD/post/howto-self-drawing-svg-animation">"Self-Drawing" SVG</a></li>
-    		<li><a href="https://stackoverflow.com/questions/15275362/how-to-transition-a-path-in-d3-js">How to transition a path in d3.js</a></li>
-        <li><a href="https://css-tricks.com/svg-line-animation-works/">How SVG Line Animation Works</a></li>
-        <li><a href="http://blog.roachking.net/blog/2014/10/31/osolve-team-drawing-animation/">使用 SVG 將圖片做成動畫</a></li>
-        <li><a href="https://www.hesyitsai.com/">何一非</a></li>
-    	</ul>
-    </div>
+    <section class="hero is-primary is-medium">
+    <!-- Hero head: will stick at the top -->
+      <div class="hero-head">
+        <nav class="navbar">
+          <div class="container">
+            <div class="navbar-brand">
+              <a class="navbar-item" href="../index.html">
+                NTUT - Data Visualization
+              </a>
+              <span class="navbar-burger" data-target="navbarMenuHeroA">
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            </div>
 
-  <!--   <div>
-  		<video width="400" controls loop autoplay>
-  		  <source src="3.mp4" type="video/mp4">
-  		</video>
-    </div> -->
+            <div id="navbarMenuHeroA" class="navbar-menu">
+              <div class="navbar-end">
+               <!--  <div class="navbar-item has-dropdown is-hoverable">
+                  <a class="navbar-link">
+                    More
+                  </a>
 
-    <div id="pen-display-area">
-      鉛筆字展示區 (姓名)
-      <hr>
-      <!-- <img width="256" src="./uni8607_FZSJSK--GBK1-0.svg">
-      <img width="256" src="./uni5B50_FZSJSK--GBK1-0.svg">
-      <img width="256" src="./uni77BB_FZSJSK--GBK1-0.svg"> -->
+                  <div class="navbar-dropdown">
+                    <a class="navbar-item">
+                      About
+                    </a>
+                    <a class="navbar-item">
+                      Jobs
+                    </a>
+                    <a class="navbar-item">
+                      Contact
+                    </a>
+                    <hr class="navbar-divider">
+                    <a class="navbar-item">
+                      Report an issue
+                    </a>
+                  </div>
+                </div> -->
 
-    </div>
+                <span class="navbar-item">
+                  <a class="button is-primary">
+                    <span class="icon">
+                      <i class="fab fa-github fa-2x"></i>
+                    </span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
 
-    <div>
-      Drag and Drop 展示區 (接收任何SVG)
-    </div>
+      <!-- Hero content: will be in the middle -->
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <p class="title">
+            Lab08 
+          </p>
+          <p class="subtitle">
+            漢字書寫 (鉛筆字) (毛筆字也OK!) Path Animation
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="box video-link-list">
+        <h3>
+          <i class="fas fa-exclamation-triangle"></i>
+          限定使用 <span style="color: red; text-decoration: underline;">D3.js</span>，參考以下影片：
+        </h3>
+
+        <ul>
+          <li><a href="https://bl.ocks.org/basilesimon/f164aec5758d16d51d248e41af5428e4">Animate path in D3</a></li>
+          <li><a href="https://codepen.io/MyXoToD/post/howto-self-drawing-svg-animation">"Self-Drawing" SVG</a></li>
+          <li><a href="https://stackoverflow.com/questions/15275362/how-to-transition-a-path-in-d3-js">How to transition a path in d3.js</a></li>
+          <li><a href="https://css-tricks.com/svg-line-animation-works/">How SVG Line Animation Works</a></li>
+          <li><a href="http://blog.roachking.net/blog/2014/10/31/osolve-team-drawing-animation/">使用 SVG 將圖片做成動畫</a></li>
+          <li><a href="https://www.hesyitsai.com/">何一非</a></li>
+        </ul>
+      </div>
+
+      <div class="box display-area">
+        <div id="pen-display-area">
+          鉛筆字展示區 (姓名)
+          <hr style="background-color: #8f8f8d50">
+        </div>
+      </div>
+    </section>
+    
+
+    
 
     <script type="text/javascript">
       d3.xml("pen_writing_svg/tsai.svg")

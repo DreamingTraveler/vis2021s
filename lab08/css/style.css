@@ -1,21 +1,50 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap');
 
-h1, div {
-    background-color: rgba(255, 255, 0, 0.1);
-    font-family: 'Noto Serif JP', serif;
-    font-size: 24pt;
-    border: solid 1px black;
-    width: 90%;
-    margin: 5px auto;
-    padding: 10px;
+:root {
+    --brown: #b78846;
+}
+@font-face {
+    font-family: "ZMWen Regular Script";
+    src: url("../../fonts/Wen.ttf");
+    unicode-range: U+4E00-9FFF, U+3040-30FF, U+31F0-31FF, U+3000-303F, U+FF00-FFEF;
 }
 
-div {
-    font-size: 12pt;
+@font-face {
+    font-family: "Gabriola";
+    src: url("../../fonts/Gabriola.ttf");
+    unicode-range: U+00-024F;
 }
 
-body {
-    background-color: rgba(255, 128, 255, 0.1);
+* {
+    font-family: "ZMWen Regular Script", "Gabriola", "Noto Serif JP", serif;
+}
+
+.hero-head {
+    font-size: 2.5vw;
+}
+
+.title {
+    font-size: 4vw;
+}
+
+.subtitle {
+    font-size: 3vw;
+}
+
+.video-link-list, .display-area {
+    background-color: #f0fc6255;
+}
+
+.video-link-list h3 {
+    font-size: 2vw;
+}
+
+.video-link-list ul {
+    font-size: 1.5vw;
+}
+
+#pen-display-area {
+    font-size: 2vw;
 }
 
 video:hover {
