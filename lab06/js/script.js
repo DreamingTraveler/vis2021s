@@ -161,7 +161,7 @@ window.onload = function() {
 	      
 	  }
 
-	  var settings = d3.select("body")
+	  var settings = d3.select("#inner-block")
 	    .append("div")
 	    .attr("id", "settings")
 

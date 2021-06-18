@@ -1,0 +1,156 @@
+:root {
+    --brown: #b78846;
+}
+@font-face {
+    font-family: "ZMWen Regular Script";
+    src: url("../../fonts/Wen.ttf");
+    unicode-range: U+4E00-9FFF, U+3040-30FF, U+31F0-31FF, U+3000-303F, U+FF00-FFEF;
+}
+
+@font-face {
+    font-family: "Gabriola";
+    src: url("../../fonts/Gabriola.ttf");
+    unicode-range: U+00-024F;
+}
+
+* {
+    font-family: "ZMWen Regular Script", "Gabriola", "Noto Serif JP", serif;
+}
+
+svg {
+    font-size: 1.3vw;
+    shape-rendering: crispEdges;
+}
+
+#container{
+    overflow: scroll;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+}
+
+path .domain {
+    stroke: none;
+}
+
+.y .tick line {
+    stroke: #ddd;
+}
+
+.hero-head {
+    font-size: 2.5vw;
+}
+
+.title {
+    font-size: 4vw;
+}
+
+.subtitle {
+    font-size: 3vw;
+}
+
+#settings{
+    display: inline-block;
+    width: 100%;
+}
+
+#dropdown-area{
+    float: left;
+    width: 25vw;
+    margin: 30px 0 0 150px;
+    font-size: 2vw;
+}
+
+#dropdown-list{
+    width: 15vw;
+    padding: 10px;
+    
+    background: #9bc7de;
+    outline: none;
+    cursor: pointer;
+    border-radius: 5px;
+
+    font-weight: bold;
+    font-size: 1vw;
+}
+
+#dropdown-list option {
+    font-size: 2vw
+}
+
+#input-bin-area{
+    margin: 30px 0 0 5px;
+    font-size: 2vw;
+}
+
+#num-bins{
+    width: 5%;
+    padding: 5px;
+    font-size: 1.5vw;
+    
+    background: #9bc7de;
+    outline: none;
+    cursor: pointer;
+    border-radius: 5px;
+
+    font-weight: bold;
+}
+
+*:before, *:after {
+    box-sizing: border-box;
+}
+
+#display-area {
+    border: 3px solid var(--brown);
+    padding: 10px;
+    margin: 50px;
+}
+
+#display-area:before, #display-area:after {
+    content: "•";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    font-size: 14px;
+    color: var(--brown);
+    border: 2px solid var(--brown);
+    line-height: 12px;
+    text-align: center;
+}
+
+
+#display-area:after {
+    right: 63px;
+    bottom: 115px;
+}
+
+#inner-block {
+    position: relative;
+    border: 2px solid var(--brown);
+    padding: 40px;
+}
+
+#inner-block:before, #inner-block:after {
+    content: "•";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    font-size: 14px;
+    color: var(--brown);
+    border: 2px solid var(--brown);
+    line-height: 12px;
+    bottom: -2px;
+    text-align: center;
+}
+
+#inner-block:before {
+    left: -2px;
+}
+
+#inner-block:after {
+    right: -2px;
+}
+

@@ -2,173 +2,61 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Lab06- Histogram</title>
+  <title>Lab06- Stacked Barplot</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
   <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <script src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
   <script src="js/script.js"></script>
-  <style type="text/css">
-  :root {
-      --brown: #b78846;
-  }
-  @font-face {
-      font-family: "ZMWen Regular Script";
-      src: url("../fonts/Wen.ttf");
-      unicode-range: U+4E00-9FFF, U+3040-30FF, U+31F0-31FF, U+3000-303F, U+FF00-FFEF;
-  }
-
-  @font-face {
-      font-family: "Gabriola";
-      src: url("../fonts/Gabriola.ttf");
-      unicode-range: U+00-024F;
-  }
-
-  @keyframes blink {
-      0% {
-             background-color: rgba(255,0,0,1)
-      }
-      50% {
-             background-color: rgba(255,0,0,0.5)
-      }
-      100% {
-             background-color: rgba(255,0,0,1)
-      }
-  }
-
-  * {
-      font-family: "ZMWen Regular Script", "Gabriola", "Noto Serif JP", serif;
-  }
-
-  svg {
-      font-size: 1.3vw;
-      shape-rendering: crispEdges;
-  }
-
-  div#container{
-      overflow: scroll;
-  }
-
-  .axis path,
-  .axis line {
-      fill: none;
-      stroke: #000;
-  }
- 
-  path.domain {
-      stroke: none;
-  }
- 
-  .y .tick line {
-      stroke: #ddd;
-  }
-
-  #settings{
-      display: inline-block;
-      width: 100%;
-  }
-
-  #dropdown-area{
-      float: left;
-      width: 25vw;
-      margin: 30px 0 0 150px;
-      font-size: 2vw;
-  }
-
-  #dropdown-list{
-      width: 15vw;
-      padding: 10px;
-      
-
-      background: #9bc7de;
-      outline: none;
-      cursor: pointer;
-      border-radius: 5px;
-
-      font-weight: bold;
-      font-size: 2vw;
-  }
-
-  #input-bin-area{
-      margin: 30px 0 0 5px;
-      font-size: 2vw;
-  }
-
-  #num-bins{
-      width: 5%;
-      padding: 5px;
-      font-size: 2vw;
-      
-      background: #9bc7de;
-      outline: none;
-      cursor: pointer;
-      border-radius: 5px;
-
-      font-weight: bold;
-  }
-
-  *:before, *:after {
-      box-sizing: border-box;
-  }
-
-  body {
-      border: 3px solid var(--brown);
-      padding: 10px;
-  }
-
-  body:before, body:after {
-      content: "•";
-      position: absolute;
-      width: 14px;
-      height: 14px;
-      font-size: 14px;
-      color: var(--brown);
-      border: 2px solid var(--brown);
-      line-height: 12px;
-      top: 21px;
-      text-align: center;
-  }
-
-
-  body:after {
-      right: 21px;
-  }
-
-  #inner-block {
-      position: relative;
-      border: 2px solid var(--brown);
-      padding: 40px;
-  }
-
-  #inner-block:before, #inner-block:after {
-      content: "•";
-      position: absolute;
-      width: 14px;
-      height: 14px;
-      font-size: 14px;
-      color: var(--brown);
-      border: 2px solid var(--brown);
-      line-height: 12px;
-      bottom: -2px;
-      text-align: center;
-  }
-
-  #inner-block:before {
-      left: -2px;
-  }
-
-  #inner-block:after {
-      right: -2px;
-  }
-
-  #title {
-      text-align: center;
-      font-size: 3vw;
-  }
-  </style>
 
 </head>
 <body>
-  <div id="inner-block">
-    <h1 id="title">Lab06 Histogram</h1>
-  </div>
+  <section class="hero is-primary is-medium">
+    <div class="hero-head">
+      <nav class="navbar">
+        <div class="container">
+          <div class="navbar-brand">
+            <a class="navbar-item" href="../index.html">
+              NTUT - Data Visualization
+            </a>
+            <span class="navbar-burger" data-target="navbarMenuHeroA">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </div>
+
+          <div id="navbarMenuHeroA" class="navbar-menu">
+            <div class="navbar-end">
+              <span class="navbar-item">
+                <span class="icon">
+                  <a class="button is-primary" href="https://github.com/DreamingTraveler/vis2021s/tree/master/lab06" target="_blank"><i class="fab fa-github fa-2x"></i></a>
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <div class="hero-body">
+      <div class="container has-text-centered">
+        <p class="title">
+          Lab 06
+        </p>
+        <p class="subtitle">
+          Stacked Barplot
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="display-area">
+    <div id="inner-block"></div>
+    
+  </section>
+
 </body>
 </html>
   
