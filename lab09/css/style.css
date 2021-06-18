@@ -1,22 +1,26 @@
 @font-face {
-font-family: "HakusyuKaisyo";
-src: url("fonts/HakusyuKaisyo.ttf");
+	font-family: "HakusyuKaisyo";
+	src: url("fonts/HakusyuKaisyo.ttf");
 }
 
-h1, div {
-    background-color: rgba(255, 255, 0, 0.1);
-    font-family: 'HakusyuKaisyo', serif;
-    font-size: 24pt;
-    border: solid 1px black;
-    width: 90%;
-    margin: 5px auto;
-    padding: 10px;
+@font-face {
+    font-family: "ZMWen Regular Script";
+    src: url("../../fonts/Wen.ttf");
+    unicode-range: U+4E00-9FFF, U+3040-30FF, U+31F0-31FF, U+3000-303F, U+FF00-FFEF;
 }
 
-#subtitle-svg{
+@font-face {
+    font-family: "Gabriola";
+    src: url("../../fonts/Gabriola.ttf");
+    unicode-range: U+00-024F;
+}
+
+* {
+    font-family: "ZMWen Regular Script", "Gabriola", "Noto Serif JP", serif;
+}
+
+#subtitle-svg {
 	position: relative; 
-	/*bottom: 60%; 
-	right: 20%;*/ 
 	border-style: none;
 	z-index: 2;
 	transform: translate(0, -400px);
@@ -25,12 +29,25 @@ h1, div {
 svg text {
 	font-size: 2vw;
     fill: white;
-    /*stroke: black;*/
     font-family: 'HakusyuKaisyo';
+}
+
+.hero-head {
+    font-size: 2.5vw;
+}
+
+.title {
+	text-align: center;
+    font-size: 4vw;
+}
+
+.subtitle {
+    font-size: 3vw;
 }
 
 
 #display-area {
+	margin: auto;
 	z-index: -1;
 	background-image: linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
 }
@@ -38,15 +55,30 @@ svg text {
 #gurenge-video {
 	z-index: 1;
 	background-color: black;
-	/*transform: translate(0, 150px);*/
+	transform: translateX(10%);
 	/*display: none;*/
 }
 
-#play:hover {
-	box-shadow: 0px 0px 5px 5px rgba(255, 128, 128, 0.5);
+@media (min-width: 0px){
+  #subtitle-svg {
+  	transform: translate(0, -200px)
+  }
 }
 
-.title {
-	fill: black;
-    stroke: none;
+@media (min-width: 768px){
+  #subtitle-svg {
+  	transform: translate(0, -360px)
+  }
+}
+
+@media (min-width: 1024px){
+  #subtitle-svg {
+  	transform: translate(0, -460px)
+  }
+}
+
+@media (min-width: 1440px){
+  #subtitle-svg {
+  	transform: translate(0, -560px)
+  }
 }
