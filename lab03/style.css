@@ -16,7 +16,7 @@
     font-family: "ZMWen Regular Script", "Gabriola", "Noto Serif JP", serif;
 }
 
-.hero-head {
+.hero-head, .navbar-item {
     font-size: 2.5vw;
 }
 
