@@ -1,85 +1,76 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Lab02 - treemap</title>
+	<title>Lab02 - Treemap</title>
 	<meta charset="utf-8">
+	<script src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 	<script src="https://d3js.org/d3.v4.js"></script>
-	
-	<style>
-  		@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap');
-
-  		@font-face {
-		  font-family: "ZMWen Regular Script";
-		  src: url("../fonts/Wen.ttf");
-		  unicode-range: U+4E00-9FFF;
-		}
-
-		@font-face {
-		  font-family: "Gabriola";
-		  src: url("../fonts/Gabriola.ttf");
-		  unicode-range: U+00-024F;
-		}
-
-	    div, ul {
-	      border: solid 2px black;
-  		  border-radius: 1%;
-	    /*  margin: 5px;
-	      padding: 10px;*/
-	      background-color: rgba(255, 255, 128, 0.1);
-	    }
-
-	    div:hover, ul:hover {
-	      background-color: rgba(255, 128, 128, 0.1);
-	    }
-
-		html, body {
-			font-family: "ZMWen Regular Script", "Gabriola", "Noto Serif JP", serif;
-			font-weight: bold;
-			letter-spacing: 1px;
-			height: 100%;
-			width: 100%;
-			padding: 0;
-			margin: 0;
-			padding: 10px;
-	        background-color: rgba(255, 255, 0, 0.02);
-		}
-
-		svg {
-	        font-family: "ZMWen Regular Script", "Gabriola", "Noto Serif JP", serif; /*Segoe Script, */
-	        font-weight: bold;
-		}
-		@keyframes oxxo{
-		    from {
-		        border-style: dotted;
-		        border-color: blue;
-		        color: blue;
-		    }
-		    to {
-		        border-style: solid;
-		        border-color: red;
-		        color: crimson;
-		    }
-		}
-		
-		#treemap {
-			height: 1200px;
-			width: 3300px;
-		}
-	</style>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<div style="padding-left: 25px; font-size: 50px">
-		Lab 02 treemap
-	</div>
-	<ul style="font-size: 25px">
-		<li style="color: red">Esophagus Cancer DNA Methylation Data</li>
-		<li>Data Source: <a href="https://portal.gdc.cancer.gov/legacy-archive">TCGA legacy (The Cancer Genome Atlas Legacy)</a> </li>
-		<li>Columns: 1. Probe ID 2. Chromosome 3. Genomic Coordinate 4. Beta Value</li>
-		<!-- <li><a href="https://www.d3-graph-gallery.com/graph/treemap_custom.html">Treemap customization in d3.js</a></li>
-		<li><a href="http://blog.infographics.tw/2015/10/d3js-tutorial-treemap-and-budget/">D3.js 實戰 － 利用 Treemap Layout 將政府預算視覺化</a></li> -->
-	</ul>
+	<section class="hero is-primary is-medium">
+      <div class="hero-head">
+        <nav class="navbar">
+          <div class="container">
+            <div class="navbar-brand">
+              <a class="navbar-item" href="../index.html">
+                NTUT - Data Visualization
+              </a>
+              <span class="navbar-burger" data-target="navbarMenuHeroA">
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            </div>
+
+            <div id="navbarMenuHeroA" class="navbar-menu">
+              <div class="navbar-end">
+                <span class="navbar-item">
+                  <span class="icon">
+                    <a class="button is-primary" href="https://github.com/DreamingTraveler/vis2021s/tree/master/lab02" target="_blank"><i class="fab fa-github fa-2x"></i></a>
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <p class="title">
+            Lab 02
+          </p>
+          <p class="subtitle">
+            Treemap
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+    	<article class="message is-warning">
+		  <div class="message-header" style="font-size: 2.5vw;">
+		    <h1>Data Description</h1>
+		  </div>
+		  <div class="message-body">
+		    <ul style="font-size: 2vw;">
+				<li style="color: red">Esophagus Cancer DNA Methylation Data</li>
+				<li>Data Source: <a href="https://portal.gdc.cancer.gov/legacy-archive">TCGA legacy (The Cancer Genome Atlas Legacy)</a> </li>
+				<li>Columns: 1. Probe ID 2. Chromosome 3. Genomic Coordinate 4. Beta Value</li>
+				<!-- <li><a href="https://www.d3-graph-gallery.com/graph/treemap_custom.html">Treemap customization in d3.js</a></li>
+				<li><a href="http://blog.infographics.tw/2015/10/d3js-tutorial-treemap-and-budget/">D3.js 實戰 － 利用 Treemap Layout 將政府預算視覺化</a></li> -->
+			</ul>
+		  </div>
+		</article>
+    </section>
 	
-	<div id="treemap"></div>
+	<section class="section">
+		<div id="treemap"></div>
+	</section>
+	
 	
 	
 	<script>
