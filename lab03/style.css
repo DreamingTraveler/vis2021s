@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap');
+
+@font-face {
+    font-family: "ZMWen Regular Script";
+    src: url("../fonts/Wen.ttf");
+    unicode-range: U+4E00-9FFF, U+3040-30FF, U+31F0-31FF, U+3000-303F, U+FF00-FFEF;
+}
+
+@font-face {
+    font-family: "Gabriola";
+  	src: url("../fonts/Gabriola.ttf");
+  	unicode-range: U+00-024F;
+}
+
+* {
+    font-family: "ZMWen Regular Script", "Gabriola", "Noto Serif JP", serif;
+}
+
+.hero-head {
+    font-size: 2.5vw;
+}
+
+.title {
+    font-size: 4vw;
+}
+
+.subtitle {
+    font-size: 3vw;
+}
+
+.box {
+	background-color: #f0fc6255;
+	margin: 80px;
+}
+
+.card {
+	width: 50%;
+	margin: auto;
+	margin-top: 50px;
+}
+
+.card-image {
+	margin: auto;
+	width: 50%;
+}
+
+div {
+	font-size: 2vw;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+.message {
+	margin: 10px;
+}
+
+.message-body {
+	font-size: 1.5vw;
+}

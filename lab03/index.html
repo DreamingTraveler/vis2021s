@@ -3,167 +3,141 @@
 
 <head>
     <meta charset="utf-8">
-    <title>lab03</title>
+    <title>Lab 03 - 美國地圖 http.server localhost</title>
+    <script src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
     <!--
     <script src="./d3.js" charset="utf-8"></script>
 	-->
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap');
-
-   @font-face {
-        font-family: "ZMWen Regular Script";
-        src: url("../fonts/Wen.ttf");
-        unicode-range: U+4E00-9FFF, U+3040-30FF, U+31F0-31FF, U+3000-303F, U+FF00-FFEF;
-    }
-
-    @font-face {
-        font-family: "Gabriola";
-      	src: url("../fonts/Gabriola.ttf");
-      	unicode-range: U+00-024F;
-    }
-
-    h1 {
-		background-color: rgba(255, 255, 0, 0.1);
-		font-family: "ZMWen Regular Script", "Gabriola", "Noto Serif JP", serif;
-		font-size: 5vw;
-		border: solid 1px black;
-		width: 90%;
-		margin: 5px auto;
-		padding: 10px;
-    }
-
-	div {
-		font-family: "ZMWen Regular Script", "Gabriola", "Noto Serif JP", serif;
-		font-size: 1.5vw;
-		border: solid 1px black;
-		width: 90%;
-		margin: 5px auto;
-		padding: 10px;
-	}
-
-    div:hover, ul:hover, h1:hover, h3:hover {
-	    background-color: rgba(255, 255, 128, 0.1);
-	      /* offset-x | offset-y | blur-radius | spread-radius | color */
-	    box-shadow: 0px 0px 5px 5px rgba(128, 255, 255, 0.5);
-    }
-
-    svg, iframe {
-    	border: 1px solid red;
-    }
-
-
-    td, th {
-        border: 1px solid #333;
-        padding: 5px 10px;
-    }
-
-    thead,
-    tfoot {
-        background-color: #888;
-        color: #fff;
-    }
-
-    div {
-		margin-bottom: 10px;
-	}
-	.pan rect {
-		fill: black;
-		opacity: 0.2;
-	}
-	.pan text {
-		fill: black;
-		font-size: 18px;
-		text-anchor: middle;
-	}
-	.pan:hover rect,
-	.pan:hover text {
-		fill: blue;
-	}
-	.zoom rect {
-		fill: black;
-		opacity: 0.2;
-	}
-	.zoom rect {
-		rx: 5; /* Rounded corners */
-		ry: 5;
-	}
-	.zoom text {
-		fill: black;
-		font-size: 18px;
-		text-anchor: middle;
-	}
-	.zoom:hover rect,
-	.zoom:hover text {
-		fill: blue;
-	}
-	.label {
-		font-family: Helvetica, sans-serif;
-		font-size: 11px;
-		fill: black;
-		text-anchor: middle;
-	}
-	</style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
-    <h1> lab03 Python Web Server 指令 http.server / localhost </h1>
-    <div>
-        <table class="table table-striped">
-            <tbody>
-                <tr>
-                    <td scope="row"><img src="https://learning.oreilly.com/library/cover/9781491921296/250w/" width="120"></td>
-                    <td>
-                        <a href="https://alignedleft.com/tutorials/d3/">D3 Tutorials</a>
-                        <hr>
-                        O'Reilly <a href="https://www.oreilly.com/library/view/interactive-data-visualization/9781491921296/">Interactive Data Visualization for the Web</a>, 2nd Edition <img src="https://cdn.oreillystatic.com/images/sitewide-headers/oreilly_logo_mark_red.svg" width="15%">
-                        <hr>
-                        程式碼下載: <a href="https://github.com/scotthmurray/d3-book/" target="_blank">github</a>。 <img src="https://github.githubassets.com/images/modules/site/home/space.svg" width="20%">
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div>
-        <a href="https://codertw.com/%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC/50603/">本地伺服器</a> localhot (不經網絡卡傳輸，不受網路防火牆和網絡卡限制。)
-        <br>
-        <a href="https://codertw.com/%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC/50603/">本機伺服器</a> 127.0.0.1 (通過網絡卡傳輸，依賴網絡卡，受到網路防火牆和網絡卡限制。)
-    </div>
-    <div>
-        <a href="https://shengyu7697.github.io/blog/2019/11/27/Python-simple-web-server/">Python 快速建立簡單網頁伺服器</a>
-        <hr>
-        使用 Python http.server 模組建立網頁伺服器 HTTP web sever。 用瀏覽器瀏覽<font color="red">目錄</font>裡的檔案！也可以顯示目錄中的<font color="red">靜態網頁</font>。
-    </div>
-    <div>
-        localhost，別台電腦無法連進來。
-        <hr>
-        使用 Chrome 瀏覽器打開
-        <a href="http://localhost:8000/">http://localhost:8000/index.html</a> 網頁，或打開
-        <a href="http://127.0.0.1:8000/">http://127.0.0.1:8000/index.html</a> 網頁。<br>
-        <textarea rows="6" cols="100" style="font-family:'Courier New'; background: rgba(128, 255, 255, 0.1);">
+    <section class="hero is-primary is-medium">
+      <div class="hero-head">
+        <nav class="navbar">
+          <div class="container">
+            <div class="navbar-brand">
+              <a class="navbar-item" href="../index.html">
+                NTUT - Data Visualization
+              </a>
+              <span class="navbar-burger" data-target="navbarMenuHeroA">
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            </div>
 
-	  pytyhon -m http.server
+            <div id="navbarMenuHeroA" class="navbar-menu">
+              <div class="navbar-end">
+                <span class="navbar-item">
+                  <span class="icon">
+                    <a class="button is-primary" href="https://github.com/DreamingTraveler/vis2021s/tree/master/lab03" target="_blank"><i class="fab fa-github fa-2x"></i></a>
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
 
-	  http://localhost:8000/index.html
-	  http://127.0.0.1:8000/index.html
-	  </textarea>
-        <hr>
-        localhost (指定 port 8888)，別台電腦無法連進來。
-        <hr>
-        使用 Chrome 瀏覽器打開
-        <a href="http://localhost:8000/">http://localhost:8888/index.html</a> 網頁，或打開
-        <a href="http://127.0.0.1:8000/">http://127.0.0.1:8888/index.html</a> 網頁。<br>
-        <!-- page 65, pytyhon -m http.server 8888&. -->
-        <textarea rows="6" cols="100" style="font-family:'Courier New'; background: rgba(128, 255, 255, 0.1);">
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <p class="title">
+            Lab 03
+          </p>
+          <p class="subtitle">
+            美國地圖 http.server localhost
+          </p>
+        </div>
+      </div>
+    </section>
 
-	  pytyhon -m http.server 8888
+    <div class="card">
+      <div class="card-image">
+        <figure class="image">
+          <img src="https://learning.oreilly.com/library/cover/9781491921296/250w/" alt="Placeholder image">
+        </figure>
+      </div>
+      <div class="card-content">
+        <div class="media">
+          <div class="media-content">
+            <p class="title is-4"><a href="https://alignedleft.com/tutorials/d3/">D3 Tutorials</a></p>
+            <p class="subtitle is-6">Scott Murray</p>
+          </div>
+        </div>
 
-	  http://localhost:8888/index.html
-	  http://127.0.0.1:8888/index.html
-	  </textarea>
+        <div class="content">
+          O'Reilly <a href="https://www.oreilly.com/library/view/interactive-data-visualization/9781491921296/">Interactive Data Visualization for the Web</a>, 2nd Edition <img src="https://cdn.oreillystatic.com/images/sitewide-headers/oreilly_logo_mark_red.svg" width="15%">
+          <a href="#">#css</a> <a href="#">#responsive</a>
+          <hr>
+          程式碼下載: <a href="https://github.com/scotthmurray/d3-book/" target="_blank">github</a>。 <img src="https://github.githubassets.com/images/modules/site/home/space.svg" width="20%">
+        </div>
+      </div>
     </div>
-    <div>
-        <table>
+
+    <div class="tile is-ancestor" style="margin: 70px;">
+       <article class="message is-info tile-ischild">
+          <div class="message-body">
+            <a href="https://codertw.com/%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC/50603/">本地伺服器</a> localhot (不經網絡卡傳輸，不受網路防火牆和網絡卡限制。)
+            <hr>
+            <a href="https://codertw.com/%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC/50603/">本機伺服器</a> 127.0.0.1 (通過網絡卡傳輸，依賴網絡卡，受到網路防火牆和網絡卡限制。)
+          </div>
+        </article>
+
+        <article class="message is-info tile-ischild">
+          <div class="message-header">
+            <p><a href="https://shengyu7697.github.io/blog/2019/11/27/Python-simple-web-server/">Python 快速建立簡單網頁伺服器</a></p>
+          </div>
+          <div class="message-body">
+            使用 Python http.server 模組建立網頁伺服器 HTTP web sever。 用瀏覽器瀏覽<font color="red">目錄</font>裡的檔案！也可以顯示目錄中的<font color="red">靜態網頁</font>。
+          </div>
+        </article> 
+    </div>
+  
+    <div class="columns" style="margin: 50px;">
+        <article class="message is-success">
+          <div class="message-header">
+            <p>localhost，別台電腦無法連進來。</p>
+          </div>
+          <div class="message-body">
+            使用 Chrome 瀏覽器打開
+              <a href="http://localhost:8000/">http://localhost:8000/index.html</a> 網頁，或打開
+              <a href="http://127.0.0.1:8000/">http://127.0.0.1:8000/index.html</a> 網頁。<br>
+              <textarea class="textarea is-primary" rows="6" cols="100" style="font-family:'Courier New'; background: rgba(128, 255, 255, 0.1);">
+
+              python -m http.server
+
+              http://localhost:8000/index.html
+              http://127.0.0.1:8000/index.html
+              </textarea>
+          </div>
+        </article>
+
+        <article class="message is-success">
+          <div class="message-header">
+            <p>localhost (指定 port 8888)，別台電腦無法連進來。</p>
+          </div>
+          <div class="message-body">
+            使用 Chrome 瀏覽器打開
+            <a href="http://localhost:8000/">http://localhost:8888/index.html</a> 網頁，或打開
+            <a href="http://127.0.0.1:8000/">http://127.0.0.1:8888/index.html</a> 網頁。<br>
+            <!-- page 65, pytyhon -m http.server 8888&. -->
+            <textarea class="textarea is-primary" rows="6" cols="100" style="font-family:'Courier New'; background: rgba(128, 255, 255, 0.1);">
+
+            python -m http.server 8888
+
+            http://localhost:8888/index.html
+            http://127.0.0.1:8888/index.html
+            </textarea>
+          </div>
+        </article>
+    </div>
+    
+    <div class="box">
+        <table class="table is-fullwidth" style="background: none">
             <thead>
                 <tr>
                     <th colspan="4">Reserved Private IPv4 Network Ranges</th>
@@ -197,53 +171,61 @@
             </tbody>
         </table>
     </div>
-    <div>
-        Private IPv4 Network，內網裝置可以透過這個 IP 連到本機的網頁伺服器。
-        <hr>
-        使用 Chrome 瀏覽器打開
-        <a href="http://localhost:8000/">http://localhost:8000/index.html</a> 網頁，或打開
-        <a href="http://127.0.0.1:8000/">http://192.168.0.2:8000/index.html</a> 網頁。<br>
-        <textarea rows="6" cols="100" style="font-family:'Courier New'; background: rgba(128, 255, 255, 0.1);">
 
-	  ipconfig /all
+    <div class="tile is-ancestor" style="margin: 70px;">
+        <div class="tile is-child box">
+            Private IPv4 Network，內網裝置可以透過這個 IP 連到本機的網頁伺服器。
+            <hr>
+            使用 Chrome 瀏覽器打開
+            <a href="http://localhost:8000/">http://localhost:8000/index.html</a> 網頁，或打開
+            <a href="http://127.0.0.1:8000/">http://192.168.0.2:8000/index.html</a> 網頁。<br>
+            <textarea class="textarea" rows="6" cols="100" style="font-family:'Courier New'; background: rgba(128, 255, 255, 0.1);">
 
-	  pytyhon -m http.server -b 192.168.0.2
+          ipconfig /all
 
-	  http://192.168.0.2:8000/index.html
-	  </textarea>
+          pytyhon -m http.server -b 192.168.0.2
+
+          http://192.168.0.2:8000/index.html
+          </textarea>
+        </div>
+
+        <div class="tile is-child box">
+            --allow-file-access-from-files <br>
+            --disable-web-security
+            <hr>
+            <textarea class="textarea" rows="6" cols="120" style="font-family:'Courier New'; background: rgba(128, 255, 255, 0.1);">
+
+    "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --allow-file-access-from-files --disable-web-security
+
+          </textarea>
+        </div>
     </div>
-    <div>
-        --allow-file-access-from-files <br>
-        --disable-web-security
-        <hr>
-        <textarea rows="6" cols="120" style="font-family:'Courier New'; background: rgba(128, 255, 255, 0.1);">
 
-"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --allow-file-access-from-files --disable-web-security
+    
 
-	  </textarea>
-    </div>
-    <div>
+    <div class="box">
         D3 template <br>
-        <textarea rows="16" cols="100" style="font-family:'Courier New'; background: rgba(128, 255, 255, 0.1);">
+        <textarea class="textarea is-link" rows="16" cols="100" style="font-family:'Courier New'; background: rgba(128, 255, 255, 0.1);">
 
-	<!DOCTYPE html>
-	<html lang="zh-Hant-TW">
-	  <head>
-	    <meta charset="utf-8">
-	    <title>D3 Page Template</title>
-	    <script src="http://d3js.org/d3.v6.min.js" charset="utf-8"></script>
-	  </head>
-	  <body>
-	    <script type="text/javascript">
-	      // Your beautiful D3 code will go here
-	    </script>
-	  </body>
-	</html>
-	  </textarea>
+        	<!DOCTYPE html>
+        	<html lang="zh-Hant-TW">
+        	  <head>
+        	    <meta charset="utf-8">
+        	    <title>D3 Page Template</title>
+        	    <script src="http://d3js.org/d3.v6.min.js" charset="utf-8"></script>
+        	  </head>
+        	  <body>
+        	    <script type="text/javascript">
+        	      // Your beautiful D3 code will go here
+        	    </script>
+        	  </body>
+        	</html>
+    	</textarea>
     </div>
-    <div id="demo1404"></div>
-    <div>
-        <textarea rows="36" cols="100" style="font-family:'Courier New'; background: rgba(128, 255, 255, 0.1);">
+
+    <div class="box" id="demo1404"></div>
+    <div class="box">
+        <textarea class="textarea is-info" rows="36" cols="100" style="font-family:'Courier New'; background: rgba(128, 255, 255, 0.1);">
 
       //Width and height
       var w = 500;
