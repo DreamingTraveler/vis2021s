@@ -3,7 +3,10 @@
 <head>
     <meta charset="utf-8">
     <title>Lab 01 - 凱蒂貓軌道車、老鼠軌道車、電仔</title>
+    <script src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <script src="https://d3js.org/d3.v6.min.js" charset="utf-8"></script> <!-- v6.5.0 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
     <style type="text/css">
 	    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap');
 	    @font-face {
@@ -18,116 +21,184 @@
 	      unicode-range: U+00-024F;
 	    }
 
-	    body {
+	    * {
 	        font-family: "ZMWen Regular Script", "Gabriola", "Noto Serif JP", serif;
 	        font-size: 2vw;
 	    }
-	    div, ul {
-	      border: solid 2px black;
-     	  border-radius: 1%;
-	      margin: 5px;
-	      padding: 10px;
-	      background-color: rgba(255, 255, 128, 0.1);
-	    }
 
-	    div:hover, ul:hover {
-	      background-color: rgba(255, 128, 128, 0.1);
-	    }
+	    .hero-head, .navbar-item {
+		    font-size: 2.5vw;
+		}
+
+		.title {
+		    font-size: 4vw;
+		}
+
+		.subtitle {
+		    font-size: 3vw;
+		}
+
+		.box {
+			background-color: #f0fc6255;
+		}
+
+		.box iframe {
+			margin: 25px;
+		}
     </style>
 </head>
 <body>
-	<div>
-		Lab 01 - 凱蒂貓軌道車、老鼠軌道車、電仔
-	</div>
-	<div>
-		上台報告: 2021.03.18 (四)
-	</div>
-	<ul style="padding: 30px">
-		<li>下載 SVG 圖檔後，分別命名為 <font color="red">hellokitty.svg</font>、<font color="red">mickey.svg</font> 與 <font color="red">electro.svg</font>，然後放到 lab01 檔案夾。</li>
-		<li>https://github.com/君の名は/vis2021s/lab01/hellokitty.svg (限用單一路徑 path，限用 path 中的 M/m 指令、 A/a 指令。)</li>
-		<li>https://github.com/君の名は/vis2021s/lab01/mickey.svg (限用單一路徑 path，限用 path 中的 M/m 指令、 A/a 指令。)</li>
-		<li>https://github.com/君の名は/vis2021s/lab01/electro.svg (所有 SVG tag 都可使用)</li>
-	</ul>
-	<div>
-    	<iframe src="./hellokitty.svg" width="512" height="512" seamless="seamless" scrolling="yes" frameborder="0" allowtransparency="true"> </iframe>
-    	<iframe src="./mickeymouse.svg" width="512" height="512" seamless="seamless" scrolling="yes" frameborder="0" allowtransparency="true"> </iframe>
-	</div>
-	<div>
-    	<iframe src="./electro.svg" width="512" height="512" seamless="seamless" scrolling="yes" frameborder="0" allowtransparency="true"> </iframe>
-    	<iframe src="./mickey.svg" width="512" height="512" seamless="seamless" scrolling="yes" frameborder="0" allowtransparency="true"> </iframe>
-	</div>
+	<section class="hero is-primary is-medium">
+      <div class="hero-head">
+        <nav class="navbar">
+          <div class="container">
+            <div class="navbar-brand">
+              <a class="navbar-item" href="../index.html">
+                NTUT - Data Visualization
+              </a>
+              <span class="navbar-burger" data-target="navbarMenuHeroA">
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            </div>
+
+            <div id="navbarMenuHeroA" class="navbar-menu">
+              <div class="navbar-end">
+                <span class="navbar-item">
+                  <span class="icon">
+                    <a class="button is-primary" href="https://github.com/DreamingTraveler/vis2021s/tree/master/lab01" target="_blank"><i class="fab fa-github fa-2x"></i></a>
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <p class="title">
+            Lab 01 
+          </p>
+          <p class="subtitle">
+            凱蒂貓軌道車、老鼠軌道車、電仔
+          </p>
+        </div>
+      </div>
+    </section>
+	
+	<section class="section">
+		<div class="box">
+			<ul style="padding: 30px">
+				<li>下載 SVG 圖檔後，分別命名為 <font color="red">hellokitty.svg</font>、<font color="red">mickey.svg</font> 與 <font color="red">electro.svg</font>，然後放到 lab01 檔案夾。</li>
+				<li>https://github.com/君の名は/vis2021s/lab01/hellokitty.svg (限用單一路徑 path，限用 path 中的 M/m 指令、 A/a 指令。)</li>
+				<li>https://github.com/君の名は/vis2021s/lab01/mickey.svg (限用單一路徑 path，限用 path 中的 M/m 指令、 A/a 指令。)</li>
+				<li>https://github.com/君の名は/vis2021s/lab01/electro.svg (所有 SVG tag 都可使用)</li>
+			</ul>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="box">
+	    	<iframe src="./hellokitty.svg" width="512" height="512" seamless="seamless" scrolling="yes" frameborder="0" allowtransparency="true"> </iframe>
+	    	<iframe src="./mickeymouse.svg" width="512" height="512" seamless="seamless" scrolling="yes" frameborder="0" allowtransparency="true"> </iframe>
+		</div>
+
+		<div class="box">
+	    	<iframe src="./electro.svg" width="512" height="512" seamless="seamless" scrolling="yes" frameborder="0" allowtransparency="true"> </iframe>
+	    	<iframe src="./mickey.svg" width="512" height="512" seamless="seamless" scrolling="yes" frameborder="0" allowtransparency="true"> </iframe>
+		</div>
+	</section>
+	
+	
 	<!-- ---------------- -->
-	<div>
-		<table style="width:100%">
-		  <tr>
-		    <td><a target="_blank" href="https://jakearchibald.github.io/svgomg/">SVGOMG - SVGO's Missing GUI</a></td>
-		    <td><a target="_blank" href="https://www.base64-image.de/">Base64 Image Encoder</a></td>
-		    <td><a target="_blank" href="https://onlinejpgtools.com/convert-jpg-to-data-uri">Convert JPG to Data URI</a></td>
-		    <td><a href="https://www.oxxostudio.tw/articles/201410/svg-tutorial.html">SVG 完整教學31 天- OXXO.STUDIO</a></td>
-		  </tr>
-		</table>
-	</div>
+
+	<section class="section">
+		<div class="box">
+			<table class="table is-fullwidth" style="width:100%">
+			  <tr>
+			    <td><a target="_blank" href="https://jakearchibald.github.io/svgomg/">SVGOMG - SVGO's Missing GUI</a></td>
+			    <td><a target="_blank" href="https://www.base64-image.de/">Base64 Image Encoder</a></td>
+			    <td><a target="_blank" href="https://onlinejpgtools.com/convert-jpg-to-data-uri">Convert JPG to Data URI</a></td>
+			    <td><a href="https://www.oxxostudio.tw/articles/201410/svg-tutorial.html">SVG 完整教學31 天- OXXO.STUDIO</a></td>
+			  </tr>
+			</table>
+
+			<table class="table is-fullwidth" style="width:100%">
+			  <tr>
+			    <td>rx： </td><td>橢圓的 x 軸半徑 ( 根據不同的終點換算成比例 ) </td>
+			  </tr>
+			  <tr>
+			    <td>ry： </td><td>橢圓的 y 軸半徑 ( 根據不同的終點換算成比例 ) </td>
+			  </tr>
+			  <tr>
+			    <td>x-axis-rotation： </td><td>弧線與 x 軸的夾角 </td>
+			  </tr>
+			  <tr>
+			    <td>large-arc-flag： </td><td>1 為大角度弧線，0 為小角度弧線 ( 必須有三個點 ) </td>
+			  </tr>
+			  <tr>
+			    <td>sweep-flag： </td><td>1 為順時針方向，0 為逆時針方向 </td>
+			  </tr>
+			  <tr>
+			    <td>x：  </td><td>終點 x 座標 </td>
+			  </tr>
+			  <tr>
+			    <td>y：  </td><td>終點 y 座標 </td>
+			  </tr>
+			</table>
+		</div>
+	</section>
+	
 	<!-- ---------------- -->
-	<div>
-		<table style="width:100%">
-		  <tr>
-		    <td>rx： </td><td>橢圓的 x 軸半徑 ( 根據不同的終點換算成比例 ) </td>
-		  </tr>
-		  <tr>
-		    <td>ry： </td><td>橢圓的 y 軸半徑 ( 根據不同的終點換算成比例 ) </td>
-		  </tr>
-		  <tr>
-		    <td>x-axis-rotation： </td><td>弧線與 x 軸的夾角 </td>
-		  </tr>
-		  <tr>
-		    <td>large-arc-flag： </td><td>1 為大角度弧線，0 為小角度弧線 ( 必須有三個點 ) </td>
-		  </tr>
-		  <tr>
-		    <td>sweep-flag： </td><td>1 為順時針方向，0 為逆時針方向 </td>
-		  </tr>
-		  <tr>
-		    <td>x：  </td><td>終點 x 座標 </td>
-		  </tr>
-		  <tr>
-		    <td>y：  </td><td>終點 y 座標 </td>
-		  </tr>
-		</table>
-	</div>
+	<section class="section">
+		<div class="box">
+		    <iframe src="./hellokitty.html" width="100%" height="700" seamless="seamless" scrolling="yes" frameborder="0" allowtransparency="true"> </iframe>
+		</div>
+	</section>
 
-	<div>
-	    <iframe src="./hellokitty.html" width="100%" height="700" seamless="seamless" scrolling="yes" frameborder="0" allowtransparency="true"> </iframe>
-	</div>
+	<section class="section">
+		<div class="box">
+		    <iframe src="./mickeymouse.html" width="100%" height="700" seamless="seamless" scrolling="yes" frameborder="0" allowtransparency="true"> </iframe>
+		</div>
+	</section>
 
-	<div>
-	    <iframe src="./mickeymouse.html" width="100%" height="700" seamless="seamless" scrolling="yes" frameborder="0" allowtransparency="true"> </iframe>
-	</div>
+	<section class="section">
+		<div class="box">
+		    <iframe src="./electro.html" width="100%" height="700" seamless="seamless" scrolling="yes" frameborder="0" allowtransparency="true"> </iframe>
+		</div>
+	</section>
 
-	<div>
-	    <iframe src="./electro.html" width="100%" height="700" seamless="seamless" scrolling="yes" frameborder="0" allowtransparency="true"> </iframe>
-	</div>
-	<div>
-	    <iframe src="./largearcsweep1.html" width="100%" height="700" seamless="seamless" scrolling="yes" frameborder="0" allowtransparency="true"> </iframe>
-	</div>
+	<section class="section">
+		<div class="box">
+		    <iframe src="./largearcsweep1.html" width="100%" height="700" seamless="seamless" scrolling="yes" frameborder="0" allowtransparency="true"> </iframe>
+		</div>
+	</section>
+	
+	<section class="section">
+		<div class="box">
+		    <iframe src="./largearcsweep2.html" width="100%" height="700" seamless="seamless" scrolling="yes" frameborder="0" allowtransparency="true"> </iframe>
+		</div>
+	</section>
 
-	<div>
-	    <iframe src="./largearcsweep2.html" width="100%" height="700" seamless="seamless" scrolling="yes" frameborder="0" allowtransparency="true"> </iframe>
-	</div>
+	<section class="section">
+		<div class="box">
+		    <iframe src="./largearcsweep3.html" width="100%" height="700" seamless="seamless" scrolling="yes" frameborder="0" allowtransparency="true"> </iframe>
+		</div>
+	</section>
 
-	<div>
-	    <iframe src="./largearcsweep3.html" width="100%" height="700" seamless="seamless" scrolling="yes" frameborder="0" allowtransparency="true"> </iframe>
-	</div>
+	<section class="section">
+		<div class="box">
+		    <iframe src="./largearcsweep4.html" width="100%" height="700" seamless="seamless" scrolling="yes" frameborder="0" allowtransparency="true"> </iframe>
+		</div>
+	</section>
 
-	<div>
-	    <iframe src="./largearcsweep4.html" width="100%" height="700" seamless="seamless" scrolling="yes" frameborder="0" allowtransparency="true"> </iframe>
-	</div>
-
-	<div>
-	    <iframe src="./angle.html" width="100%" height="700" seamless="seamless" scrolling="yes" frameborder="0" allowtransparency="true"> </iframe>
-	</div>
-
-	<script type="text/javascript">
-	  // Your beautiful D3 code will go here
-	</script>
+	<section class="section">
+		<div class="box">
+		    <iframe src="./angle.html" width="100%" height="700" seamless="seamless" scrolling="yes" frameborder="0" allowtransparency="true"> </iframe>
+		</div>
+	</section>
 
  </body>
 </html>
